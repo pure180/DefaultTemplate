@@ -1,0 +1,156 @@
+!!! 5
+%html(xmlns="http://www.w3.org/1999/xhtml" lang="en")
+
+  %head
+    %meta(charset="utf-8")
+    %title Template
+    %meta(name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0")
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    %link(href="css/index.css" rel="stylesheet")
+
+
+  %body
+    
+    %header
+      %nav.navbar.navbar-default
+        .container-fluid
+          .container
+            .navbar-header
+              %button.navbar-toggle.collapsed(type="button" data-toggle="collapse" data-target="collapse")
+                %span.sr-only Toggle Navigation
+                %span.icon-bar
+                %span.icon-bar
+                %span.icon-bar
+              %a.navbar-brand(href="#") Brand
+
+            #collapse.collapse.navbar-collapse
+              %ul.nav.navbar-nav
+                %li.active
+                  %a(href="#") Link
+                    %span.sr-only (current)
+                %li
+                  %a(href="#") Link
+                %li.dropdown
+                  %a.dropdown-toggle(data-toggle="dropdown" role="button" aria-expanded="false") Dropdown
+                    %span.caret
+                    %ul.dropdown-menu(role="menu")
+                      %li
+                        %a(href="#") Action
+                      %li
+                        %a(href="#") Another Action
+                      %li
+                        %a(href="#") Something else here
+                      %li.divider
+                      %li
+                        %a(href="#") Separated link
+                      %li.divider
+                      %li
+                        %a(href="#") One more separated link
+              %form.navbar-form.navbar-left(role="search")
+                .form-group
+                  %input.form-control(type="text" placeholder="Search")
+                  %button.btn.btn-default(type="submit") Submit
+              %ul.nav.navbar-nav.navbar-right
+                %li
+                  %a(href="#") Link
+                %li.dropdown
+                  %a.dropdown-toggle(data-toggle="dropdown" role="button" aria-expanded="false") Dropdown
+                    %span.caret
+                    %ul.dropdown-menu(role="menu")
+                      %li
+                        %a(href="#") Action
+                      %li
+                        %a(href="#") Another action
+                      %li
+                        %a(href="#") Something else here
+                      %li.divider
+                      %li
+                        %a(href="#") Separated link
+
+    %main.container
+      .row
+        .col-md-12
+
+          %h1 Standart Bootstrap Elements
+            %span for HAML
+
+          %h2 Breadcrumb
+
+          %ol.breadcrumb
+            %li
+              %a(href="#") Home
+            %li
+              %a(href="") Libary
+            %li.active Data
+
+        .col-md-12
+          %h2 Pagination
+
+        .col-md-6
+          %nav
+            %ul.pagination
+              %li
+                %a(href="#" aria-label="Previous")
+                  %span(aria-hidden="true") &laquo;
+              %li
+                %a(href="#") 1
+              %li
+                %a(href="#") 2
+              %li
+                %a(href="#") 3
+              %li
+                %a(href="#") 4
+              %li
+                %a(href="#" aria-label="Next")
+                  %span(aria-hidden="true") &raquo;
+        .col-md-6        
+          %nav
+            %ul.pagination
+              %li.disabled
+                %a(href="#" aria-label="Previous")
+                  %span(aria-hidden="true") &laquo;
+              %li.active
+                %a(href="#") 1
+                  %span.sr-only (current)
+              %li
+                %a(href="#") 2
+              %li
+                %a(href="#") 3
+              %li
+                %a(href="#") 4
+              %li
+                %a(href="#" aria-label="Next")
+                  %span(aria-hidden="true") &raquo;
+
+        .col-md-12
+          %h2 Pager
+
+        .col-md-3
+          %h4 Default
+          %nav
+            %ul.pager
+              %li
+                %a(href="#") Previous
+              %li
+                %a(href="#") Next
+        .col-md-9
+          %h4 Aligned links with optional disable state
+          %nav
+            %ul.pager
+              %li.previous.disabled
+                %a(href="#") <span aria-hidden="true">&larr;</span> Older
+              %li.next
+                %a(href="#") Newer <span aria-hidden="true">&rarr;</span> 
+
+
+
+    %footer.container-fluid
+
+  %script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
+  %script(src="js/main.min.js")
+
+
+
