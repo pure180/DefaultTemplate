@@ -8,7 +8,8 @@
 * gulp
 
 #### Install 
-* Download NodeJs from [http://nodejs.org/download/(http://nodejs.org/download/)]
+* Download NodeJs from [http://nodejs.org/download/] and install it.
+* Install gulp global using > npm install gulp -g
 
 
 #### Build
@@ -16,5 +17,3 @@
 git clone git@github.com:pure180/DefaultTemplate.git
 cd DefaultTemplate
 npm install
-bower install
-cp config.json.default config.json
