@@ -48,7 +48,7 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
   return gulp.src('src/scripts/**/*.js')
     .pipe(jshint('.jshintrc'))
-    //.pipe(jshint.reporter('default'))
+    //.pipe(jshint.reporter('default', { verbose: true }))
     .pipe(concat('main.js'))
     .pipe(gulp.dest('public/js'))
     .pipe(rename({suffix: '.min'}))
@@ -100,6 +100,8 @@ gulp.task('webserver', function() {
 });
 
 // Default task
-gulp.task('default', ['clean', 'haml', 'styles', 'scripts', 'images', 'fonts'], function() {
+gulp.task('start', ['clean', 'haml', 'styles', 'scripts', 'images', 'fonts'], function() {
     gulp.start('watch');
 }); 
+// Default task
+gulp.task('default', ['clean', 'haml', 'styles', 'scripts', 'images', 'fonts'] ); 
