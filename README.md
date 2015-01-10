@@ -12,8 +12,10 @@
 * Install gulp global using > npm install gulp -g
 
 
-#### Build
+#### Build instructions
+Getting Startet use Commandline/Terminal
 ```
 git clone git@github.com:pure180/DefaultTemplate.git
 cd DefaultTemplate
 npm install
+gulp
