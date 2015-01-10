@@ -52,7 +52,8 @@
               %form.navbar-form.navbar-left(role="search")
                 .form-group
                   %input.form-control(type="text" placeholder="Search")
-                  %button.btn.btn-default(type="submit") Submit
+                  %button.btn.btn-default(type="submit")
+                     %span.glyphicon.glyphicon-search
               %ul.nav.navbar-nav.navbar-right
                 %li
                   %a(href="#") Link
@@ -75,7 +76,7 @@
         .col-md-12
 
           %h1 Standart Bootstrap Elements
-            %span for HAML
+            %span.label.label-primary for HAML
 
           %h2 Breadcrumb
 
@@ -144,10 +145,33 @@
                 %a(href="#") <span aria-hidden="true">&larr;</span> Older
               %li.next
                 %a(href="#") Newer <span aria-hidden="true">&rarr;</span> 
+        .col-md-12
+          %h2 Labels
+        .col-md-6
+          %h3 Example Headers Labels
+          %hr
+          %h1 Header (h1)&nbsp;
+            %span.label.label-default Label
+          %h2 Header (h2)&nbsp;
+            %span.label.label-primary Label
+          %h3 Header (h3)&nbsp;
+            %span.label.label-success Label
+          %h4 Header (h4)&nbsp;
+            %span.label.label-info Label
+          %h5 Header (h5)&nbsp;
+            %span.label.label-warning Label
+          %h6 Header (h6)&nbsp;
+            %span.label.label-danger Label
+        .col-md-6
+          %h3 Badgets
+          %hr
+          %a(href="#") Inbox&nbsp;
+            %span.badge 42
 
 
 
     %footer.container-fluid
+
 
   %script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js")
   %script(src="js/main.min.js")

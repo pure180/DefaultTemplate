@@ -64,6 +64,11 @@ gulp.task('images', function() {
     //.pipe(notify({ message: 'Images task complete' }))
 });
 
+gulp.task('fonts', function() { 
+    return gulp.src('src/fonts/**.*') 
+        .pipe(gulp.dest('./public/fonts')); 
+});
+
 gulp.task('clean', function(cb) {
     del(['public/css', 'public/js', 'public/img'], cb)
 });
@@ -95,6 +100,6 @@ gulp.task('webserver', function() {
 });
 
 // Default task
-gulp.task('default', ['clean', 'watch'], function() {
-    gulp.start('haml', 'styles', 'scripts', 'images');
+gulp.task('default', ['clean', 'haml', 'styles', 'scripts', 'images', 'fonts'], function() {
+    gulp.start('watch');
 }); 
