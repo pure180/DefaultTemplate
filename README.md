@@ -18,4 +18,4 @@ Getting Startet use Commandline/Terminal
 git clone git@github.com:pure180/DefaultTemplate.git
 cd DefaultTemplate
 npm install
-gulp
+gulp start
