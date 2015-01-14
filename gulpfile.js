@@ -16,9 +16,23 @@ var gulp = require('gulp'),
     webserver = require('gulp-webserver'),
     del = require('del');
 
-var paths = {
+
+
+var root = {
+  src: './src/',
+  build: './public/',
+  bower_components: './bower_components/'
+};
+
+var src_paths = {
   images: 'src/img/**/*',
-  less: 'src/less/**/*.less',
+  less: root.src + 'less',
+  scripts: root.src + 'scripts'
+};
+
+var build_paths = {
+  fonts: root.build + 'fonts',
+  css: root.build + 'css',
 };
 
 var LessPluginCleanCSS = require("less-plugin-clean-css"),
@@ -37,17 +51,17 @@ gulp.task('haml', function () {
 
 // Perform rendering of LESS to CSS
 gulp.task('styles', function() {
-    return gulp.src('src/less/index.less')
+    return gulp.src( src_paths.less + '/index.less')
     .pipe(less({
         plugins: [autoprefix, cleancss]
     }))
-    .pipe(gulp.dest('public/css'))
+    .pipe(gulp.dest( build_paths.css ))
     .pipe(notify({ message: 'CSS write task complete' }));
 });
 
 gulp.task('scripts', function() {
-  return gulp.src('src/scripts/**/*.js')
-    .pipe(jshint('.jshintrc'))
+  return gulp.src( src_paths.scripts + '/**/*.js')
+    .pipe(jshint( src_paths.scripts + '/.jshintrc'))
     //.pipe(jshint.reporter('default', { verbose: true }))
     .pipe(concat('main.js'))
     .pipe(gulp.dest('public/js'))
@@ -64,9 +78,16 @@ gulp.task('images', function() {
     //.pipe(notify({ message: 'Images task complete' }))
 });
 
-gulp.task('fonts', function() { 
-    return gulp.src('src/fonts/**.*') 
-        .pipe(gulp.dest('./public/fonts')); 
+gulp.task('fonts', function() {
+
+    var bootstrap_fonts = gulp.src( root.bower_components + 'bootstrap/fonts/*')
+        .pipe(gulp.dest(build_paths.fonts));
+
+    var fontawesome_fonts = gulp.src( root.bower_components + 'fontawesome/fonts/*')
+        .pipe(gulp.dest(build_paths.fonts));
+
+    return bootstrap_fonts, fontawesome_fonts;
+
 });
 
 gulp.task('clean', function(cb) {
