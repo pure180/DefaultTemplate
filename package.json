@@ -42,5 +42,6 @@
     "HAML",
     "Template",
     "App"
-  ]
+  ],
+  "devDependencies": {}
 }
