@@ -5,17 +5,26 @@
 
 * nodejs
 * npm
+* bower
 * gulp
 
 #### Install 
 * Download NodeJs from [http://nodejs.org/download/] and install it.
-* Install gulp global using > npm install gulp -g
+* Install gulp global, run > npm install gulp -g
+* Install bower global, run > npm install bower -g
 
 
-#### Build instructions
-Getting Startet use Commandline/Terminal
+#### Build instructions.
+Getting startet in Commandline/Terminal
+
+##### 1. Clone git repository.
 ```
 git clone git@github.com:pure180/DefaultTemplate.git
-cd DefaultTemplate
-npm install
-gulp start
+
+##### 2. Install applikation dependencies
+Navigate to the applikation folder on your computer (cd DefaultTemplate), then run:
+```
+1. cd DefaultTemplate
+2. npm install 
+3. gulp bower-update
+4. gulp start

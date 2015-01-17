@@ -1,3 +1,8 @@
-bower_components
+
 node_modules
 public
+src/bower_components
+src/less/bootstrap
+src/less/font-awesome
+src/fonts
+src/scripts/libs.js
