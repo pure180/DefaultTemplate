@@ -20,7 +20,7 @@ Getting startet in Commandline/Terminal
 ##### 1. Clone git repository.
 ```
 git clone git@github.com:pure180/DefaultTemplate.git
-
+```
 ##### 2. Install applikation dependencies
 Navigate to the applikation folder on your computer (cd DefaultTemplate), then run:
 ```
