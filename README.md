@@ -23,7 +23,6 @@ git clone git@github.com:pure180/DefaultTemplate.git
 ```
 ##### 2. Install applikation dependencies
 Navigate to the applikation folder on your computer (cd DefaultTemplate), then run:
-```
-1. npm install 
-2. gulp bower-update
-3. gulp start
+1. `npm install` > This will install all needed packages  
+2. `gulp bower-update` > This will install all needed bower dependencies and copy them to the source folder
+3. `gulp start` > to start developing
