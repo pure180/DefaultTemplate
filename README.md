@@ -1,4 +1,4 @@
-# Default Bootstrap HAML and LESS Template
+# Bootstrap, Jade and LESS Template-App
 
 ### Setup
 #### Requirements
