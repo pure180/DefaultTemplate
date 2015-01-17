@@ -3,6 +3,7 @@
 var gulp = require('gulp'),
     less = require('gulp-less'),
     haml = require('gulp-haml'),
+    jade = require('gulp-jade'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
     jshint = require('gulp-jshint'),
@@ -30,7 +31,8 @@ var root = {
 var src_paths = {
   images: root.src + 'images/**/*',
   less: root.src + 'less',
-  scripts: root.src + 'scripts'
+  scripts: root.src + 'scripts',
+  jade: root.src + 'jade'
 };
 
 //Build Path
@@ -46,13 +48,12 @@ var file_names = {
 };
 
 
-// Compile *.HAML to HTML and save it in ./public 
-gulp.task('haml', function () {
-  gulp.src('src/haml/**/*.haml')
-    .pipe(haml({
-        ext: '.html'
+gulp.task('jade', function () {
+  return gulp.src( src_paths.jade + '/*.jade')
+    .pipe(jade({
+      pretty: true
     }))
-    .pipe(gulp.dest('public/'));
+    .pipe(gulp.dest(root.build));
 });
 
 
@@ -114,21 +115,20 @@ gulp.task('clean', function(cb) {
 
 gulp.task('watch', ['webserver'], function() {
 
-  // Watch .haml files
-  gulp.watch('src/haml/**/*.haml', ['haml']);
+  // Watch .jade files
+  gulp.watch( src_paths.jade + '/**/*.jade', ['jade']);
   // Watch .less files
-  gulp.watch('src/less/**/*.less', ['styles']);
+  gulp.watch( src_paths.less + '/**/*.less', ['styles']);
   // Watch .js files
-  gulp.watch('src/scripts/**/*.js', ['scripts']);
+  gulp.watch( src_paths.scripts + '/**/*.js', ['scripts']);
   // Watch image files
-  gulp.watch('src/images/**/*', ['images']);
+  gulp.watch( src_paths.images, ['images']);
 
 
 });
 
 gulp.task('webserver', function() {
-  gulp.src('app')
-    gulp.src('public')
+  gulp.src('public')
     .pipe(webserver({
       livereload: true,
       //directoryListing: true,
@@ -138,11 +138,11 @@ gulp.task('webserver', function() {
 });
 
 // Default task
-gulp.task('start', ['clean', 'haml', 'styles', 'scripts', 'images', 'fonts'], function() {
+gulp.task('start', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'], function() {
     gulp.start('watch');
 }); 
 // Default task
-gulp.task('default', ['clean', 'haml', 'styles', 'scripts', 'images', 'fonts'] ); 
+gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'] ); 
 
 
 // ################################################ //
