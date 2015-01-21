@@ -32,7 +32,8 @@ var src_paths = {
   images: root.src + 'images/**/*',
   less: root.src + 'less',
   scripts: root.src + 'scripts',
-  jade: root.src + 'jade'
+  jade: root.src + 'jade',
+  fonts: root.src + 'fonts/'
 };
 
 //Build Path
@@ -53,7 +54,10 @@ gulp.task('jade', function () {
     .pipe(jade({
       pretty: true
     }))
-    .pipe(gulp.dest(root.build));
+    .pipe(gulp.dest(root.build))
+    .pipe(notify({ 
+      message: 'Served Jade "<%= file.relative %>"!' 
+    }));
 });
 
 
@@ -71,52 +75,63 @@ gulp.task('styles', function() {
         plugins: [autoprefix, cleancss]
     }))
     .pipe(gulp.dest( build_paths.css ))
-    .pipe(notify({ message: 'CSS write task complete' }));
+    .pipe(notify({ message: 'We mixed it! now we have <%= file.relative %>. This looks awsome!' }));
 });
 
 
 // Get all *.js files concat and copy a minified and a normal version of them to ./build/js
 gulp.task('scripts', function() {
-  return gulp.src( src_paths.scripts + '/**/*.js')
+  return gulp.src( [src_paths.scripts + '/libs.js', src_paths.scripts + '/holder.js'])
     .pipe(jshint( src_paths.scripts + '/.jshintrc'))
     //.pipe(jshint.reporter('default', { verbose: true }))
     .pipe(concat('main.js'))
     .pipe(gulp.dest( build_paths.js ))
+    .pipe(notify({ 
+      message: 'Served "./build/js/<%= file.relative %>"!' 
+    }))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
     .pipe(gulp.dest( build_paths.js ))
-    .pipe(notify({ message: 'Scripts task complete' }));
+    .pipe(notify({ message: 
+      'Served "./build/js/<%= file.relative %>"!' 
+    }));
 });
 
 // Optimize images and copy files from ./src/images to ./build/img
 gulp.task('images', function() {
   return gulp.src( src_paths.images )
     .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
-    .pipe(gulp.dest( build_paths.img ));
-    //.pipe(notify({ message: 'Images task complete' }))
+    .pipe(gulp.dest( build_paths.img ))
+    .pipe(notify({
+      message: 'Images task complete'
+    }));
 });
 
 gulp.task('fonts', function() {
 
-    var bootstrap_fonts = gulp.src( root.bower_components + 'bootstrap/fonts/*')
-        .pipe(gulp.dest(build_paths.fonts));
-
-    var fontawesome_fonts = gulp.src( root.bower_components + 'fontawesome/fonts/*')
-        .pipe(gulp.dest(build_paths.fonts));
-
-    return bootstrap_fonts, fontawesome_fonts;
-
+    return gulp.src( src_paths.fonts )
+        .pipe(gulp.dest( build_paths.fonts ))
+        .pipe(notify({
+          message: 'Font task complete, created folder "./build/<%= file.relative %>"' 
+        }));
+ 
 });
 
 gulp.task('clean', function(cb) {
-    del(['public/css', 'public/js', 'public/img'], cb)
+    del([ build_paths.css , build_paths.js, build_paths.img, build_paths.fonts ], cb)
 });
 
 
 gulp.task('watch', ['webserver'], function() {
 
   // Watch .jade files
-  gulp.watch( src_paths.jade + '/**/*.jade', ['jade']);
+  gulp.watch([
+    src_paths.jade + '/**/*.jade',    
+    src_paths.jade + '/Layouts/**/*.jade',
+    src_paths.jade + '/Partials/**/*.jade',
+    src_paths.jade + '/Partials/bootstrap/**/*.jade',
+    src_paths.jade + '/Templates/**/*.jade'
+  ], ['jade']);
   // Watch .less files
   gulp.watch( src_paths.less + '/**/*.less', ['styles']);
   // Watch .js files
@@ -137,9 +152,13 @@ gulp.task('webserver', function() {
     }));
 });
 
+gulp.task('compile', ['clean'], function(cb) {
+  gulp.start('jade', 'styles', 'scripts', 'images', 'fonts');
+});
+
 // Default task
-gulp.task('start', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'], function() {
-    gulp.start('watch');
+gulp.task('start', ['clean'], function(cb) {
+    gulp.start('jade', 'styles', 'scripts', 'images', 'fonts', 'watch');
 }); 
 // Default task
 gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'] ); 
