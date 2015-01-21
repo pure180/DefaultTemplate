@@ -15,6 +15,7 @@ var gulp = require('gulp'),
     cache = require('gulp-cache'),
     livereload = require('gulp-livereload'),
     webserver = require('gulp-webserver'),
+    changed = require('gulp-changed'),
     del = require('del');
 
 
@@ -83,7 +84,8 @@ var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
     autoprefix= new LessPluginAutoPrefix({browsers: ["last 2 versions"]});
 
 gulp.task('styles', function() {
-    return gulp.src( src_paths.less + '/' + files.less_index )
+  return gulp.src( src_paths.less + '/' + files.less_index )
+    .pipe(changed( build_paths.css ))
     .pipe(less({
         plugins: [autoprefix, cleancss]
     }))
@@ -116,6 +118,7 @@ gulp.task('scripts', function() {
 // Optimize images and copy files from ./src/images to ./build/img
 gulp.task('images', function() {
   return gulp.src( src_paths.images )
+    .pipe(changed( build_paths.img ))
     .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
     .pipe(gulp.dest( build_paths.img ))
     .pipe(notify({
@@ -126,10 +129,11 @@ gulp.task('images', function() {
 gulp.task('fonts', function() {
 
     return gulp.src( src_paths.fonts )
-        .pipe(gulp.dest( build_paths.fonts ))
-        .pipe(notify({
-          message: 'Font task complete, created folder "./build/<%= file.relative %>"' 
-        }));
+      .pipe(changed( build_paths.fonts ))
+      .pipe(gulp.dest( build_paths.fonts ))
+      .pipe(notify({
+        message: 'Copied "./build/fonts/<%= file.relative %>"' 
+      }));
  
 });
 
@@ -143,10 +147,10 @@ gulp.task('watch', ['webserver'], function() {
   // Watch .jade files
   gulp.watch([
     src_paths.jade + '/**/*.jade',    
-    src_paths.jade + '/Layouts/**/*.jade',
-    src_paths.jade + '/Partials/**/*.jade',
-    src_paths.jade + '/Partials/bootstrap/**/*.jade',
-    src_paths.jade + '/Templates/**/*.jade'
+    src_paths.jade + '/Layouts/*.jade',
+    src_paths.jade + '/Partials/*.jade',
+    src_paths.jade + '/Partials/bootstrap/*.jade',
+    src_paths.jade + '/Templates/*.jade'
   ], ['jade']);
   // Watch .less files
   gulp.watch( src_paths.less + '/**/*.less', ['styles']);
