@@ -33,7 +33,7 @@ var src_paths = {
   less: root.src + 'less',
   scripts: root.src + 'scripts',
   jade: root.src + 'jade',
-  fonts: root.src + 'fonts/'
+  fonts: root.src + 'fonts/**/*'
 };
 
 //Build Path
@@ -44,8 +44,21 @@ var build_paths = {
   img: root.build + 'img'
 };
 
-var file_names = {
-    js_libs : 'libs.js'
+var files = {
+    // JS Files
+    js_libs : 'libs.js',
+    js_holder: 'holder.js',
+
+    // Less Files
+    less_index: 'index.less'
+};
+
+var config = {
+  server: {
+    port: "8000",
+    open: false,
+    livereload: true
+  },
 };
 
 
@@ -70,7 +83,7 @@ var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
     autoprefix= new LessPluginAutoPrefix({browsers: ["last 2 versions"]});
 
 gulp.task('styles', function() {
-    return gulp.src( src_paths.less + '/index.less')
+    return gulp.src( src_paths.less + '/' + files.less_index )
     .pipe(less({
         plugins: [autoprefix, cleancss]
     }))
@@ -81,7 +94,10 @@ gulp.task('styles', function() {
 
 // Get all *.js files concat and copy a minified and a normal version of them to ./build/js
 gulp.task('scripts', function() {
-  return gulp.src( [src_paths.scripts + '/libs.js', src_paths.scripts + '/holder.js'])
+  return gulp.src([
+      src_paths.scripts + '/' + files.js_libs ,
+      src_paths.scripts + '/' + files.js_holder
+    ])
     .pipe(jshint( src_paths.scripts + '/.jshintrc'))
     //.pipe(jshint.reporter('default', { verbose: true }))
     .pipe(concat('main.js'))
@@ -145,10 +161,10 @@ gulp.task('watch', ['webserver'], function() {
 gulp.task('webserver', function() {
   gulp.src('public')
     .pipe(webserver({
-      livereload: true,
+      livereload: config.server.livereload,
       //directoryListing: true,
-      open: true,
-      port: "8000"
+      open: config.server.open,
+      port: config.server.port
     }));
 });
 
@@ -243,7 +259,7 @@ gulp.task('bundle-libraries-auto', ['bower'], function(){
 
   // run the gulp stream
   return gulp.src(mainFiles)
-    .pipe(concat( file_names.js_libs ))
+    .pipe(concat( files.js_libs ))
     .pipe(gulp.dest( src_paths.scripts ));
 });
 
