@@ -1,0 +1,19 @@
+//- Default.jade
+
+- var sub = true
+- var page = {name: 'Pagination', url: 'Pagination_Layout.html', parent: 'Bootstrap Elements'}
+- var active = page.name
+
+doctype html
+html(lang='en')
+
+  //- Include <HEAD></HEAD>
+  include ../../Partials/Head.jade
+
+  body
+
+    //- Include Template
+    include ../../Templates/bootstrap/Pagination_Template.jade
+
+    //- Include Footer
+    include ../../Partials/Footer.jade

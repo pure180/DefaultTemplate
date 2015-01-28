@@ -2,7 +2,6 @@
 
 var gulp = require('gulp'),
     less = require('gulp-less'),
-    haml = require('gulp-haml'),
     jade = require('gulp-jade'),
     autoprefixer = require('gulp-autoprefixer'),
     minifycss = require('gulp-minify-css'),
@@ -23,9 +22,9 @@ var gulp = require('gulp'),
 
 // Paths for the App inviroment
 var root = {
-  src: './src/',
-  build: './public/',
-  bower_components: './src/bower_components'
+  src: 'src/',
+  build: 'public/',
+  bower_components: 'src/bower_components'
 };
 
 // Paths to the Sourcefiles
@@ -64,7 +63,8 @@ var config = {
 
 
 gulp.task('jade', function () {
-  return gulp.src( src_paths.jade + '/*.jade')
+  return gulp.src( src_paths.jade + '/Layouts/**/*.jade' )
+    .pipe(changed( root.build ))
     .pipe(jade({
       pretty: true
     }))
@@ -147,10 +147,11 @@ gulp.task('watch', ['webserver'], function() {
   // Watch .jade files
   gulp.watch([
     src_paths.jade + '/**/*.jade',    
-    src_paths.jade + '/Layouts/*.jade',
-    src_paths.jade + '/Partials/*.jade',
+    src_paths.jade + '/Layouts/**/*.jade',
+    src_paths.jade + '/Partials/**/*.jade',
     src_paths.jade + '/Partials/bootstrap/*.jade',
-    src_paths.jade + '/Templates/*.jade'
+    src_paths.jade + '/Partials/PageParts/*.jade',
+    src_paths.jade + '/Templates/**/*.jade'
   ], ['jade']);
   // Watch .less files
   gulp.watch( src_paths.less + '/**/*.less', ['styles']);

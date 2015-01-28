@@ -1,0 +1,10 @@
+//- Main Navigation Listpoints
+- var nav = { 'Home' : '/', 'Bootstrap Elements' : 'bootstrap/' }
+
+//- Sub Navigation Listpoints
+if sub
+  - var subnav = { 'Alerts': 'Alerts_Layout.html', 'Badgets' : 'Badgets_Layout.html', 'Pagination' : 'Pagination_Layout.html' }
+else
+  - var subnav = { 'Alerts': 'bootstrap/Alerts_Layout.html', 'Badgets' : 'bootstrap/Badgets_Layout.html', 'Pagination' : 'bootstrap/Pagination_Layout.html' }
+
+- var hasSub = { sub1: 'Bootstrap Elements'}
