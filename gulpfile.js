@@ -63,7 +63,7 @@ var config = {
 
 
 gulp.task('jade', function () {
-  return gulp.src( src_paths.jade + '/Layouts/**/*.jade' )
+  return gulp.src( src_paths.jade + '/Templates/**/*.jade' )
     .pipe(changed( root.build ))
     .pipe(jade({
       pretty: true
@@ -90,7 +90,7 @@ gulp.task('styles', function() {
         plugins: [autoprefix, cleancss]
     }))
     .pipe(gulp.dest( build_paths.css ))
-    .pipe(notify({ message: 'We mixed it! now we have <%= file.relative %>. This looks awsome!' }));
+    .pipe(notify({ message: 'We mixed it! now we have <%= file.relative %>. This looks awesome!' }));
 });
 
 
@@ -166,7 +166,7 @@ gulp.task('watch', ['webserver'], function() {
 gulp.task('webserver', function() {
   gulp.src('public')
     .pipe(webserver({
-      livereload: config.server.livereload,
+      livereload: true,
       //directoryListing: true,
       open: config.server.open,
       port: config.server.port
@@ -183,6 +183,8 @@ gulp.task('start', ['clean'], function(cb) {
 }); 
 // Default task
 gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'] ); 
+
+
 
 
 // ################################################ //

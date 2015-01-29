@@ -1,11 +1,12 @@
-header
-  //- Include Navbar-default
-  include ../Partials/PageParts/Navigation.jade
+//- test.jade
+extends ../Layouts/Default.jade
 
-// Include Jumbotron
-include ../Partials/bootstrap/Jumbotron.jade
+block Vars
+  - var sub = false
+  - var page = {name: 'Home', url: '/', parent: '', index: true}
+  - var active = 'Home'
 
-main.container
+block main
   .row
 
     //- Include Page-header
@@ -64,4 +65,4 @@ main.container
 
     //- Include Panels
     include ../Partials/bootstrap/Panels.jade
-    
+

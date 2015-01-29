@@ -1,8 +1,9 @@
-//- ../Partials/Head.jade
-
-footer.container-fluid
-
-if sub
-  script(src='../js/main.min.js')
-else  
-  script(src='js/main.min.js')
+//- ../Partials/Footer.jade
+.container
+  .row
+    .col-md-12
+      p.small.pull-left © 2015 #{defaults.pageName}
+      p.pull-right
+        a(href="#" title="Impressum") Impressum
+        |  | 
+        a(href="#" title="Kontakt") Kontakt

@@ -1,0 +1,11 @@
+//- bootstrap/Panels.jade
+extends ../../Layouts/Default.jade
+block Vars
+  - var sub = true
+  - var page = {name: 'Panels', url: 'Panels.html', parent: 'Bootstrap CSS Elements', index: false}
+  - var active = page.name
+
+block main
+  .row.space-bottom
+    //- Include Alerts
+    include ../../Partials/bootstrap/Panels.jade 

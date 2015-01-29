@@ -1,0 +1,52 @@
+//- test.jade
+
+doctype html
+html(lang='en')
+
+  block defaultVars
+    include ../Configuration/Defaults.jade
+  block Vars
+
+  head
+    block head
+      //- Include <HEAD></HEAD>
+      include ../Partials/Head.jade
+  
+  body
+
+    // HEADER Start
+    header
+      block header
+        //- Include Navbar-default
+        include ../Partials/PageParts/Navigation.jade
+
+        //- Include Breadcrumb
+        if !page.index
+          include ../Partials/PageParts/Breadcrumb.jade
+    // HEADER End
+
+    if page.index
+      // JUMBOTRON Start
+      block jumbotron
+        //- Include Jumbotron
+        include ../Partials/bootstrap/Jumbotron.jade
+      // JUMBOTRON End
+
+    if page.name === 'Jumbotron'
+      main
+        block main
+    else
+      main.container
+        block main
+
+    footer   
+      block footer
+        //- Include Footer
+        include ../Partials/Footer.jade
+
+    block scripts
+      if sub
+        script(src='../js/main.min.js')
+      else  
+        script(src='js/main.min.js')
+
