@@ -28,8 +28,16 @@ html(lang='en')
     if page.index
       // JUMBOTRON Start
       block jumbotron
-        //- Include Jumbotron
-        include ../Partials/bootstrap/Jumbotron.jade
+        //- Full width  
+        .jumbotron.jumbotron-fullwidthimg
+          .container
+            .row
+              .col-md-12
+                h1 Jumbotron
+                h2 Full width and without corners
+                p This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
+                a.btn.btn-primary.btn-lg(href='#' role='button') Learn more
+          // img.img-responsive(src='img/jumbotron/01.jpg', alt='alt')
       // JUMBOTRON End
 
     if page.name === 'Jumbotron'
@@ -46,7 +54,12 @@ html(lang='en')
 
     block scripts
       if sub
-        script(src='../js/main.min.js')
+        script(src='../js/main.js')
       else  
-        script(src='js/main.min.js')
+        script(src='js/main.js')
+
+      script(type='text/javascript').
+        jQuery(document).ready(function(){
+          $('body').fullWidthBgImg();
+        });
 
