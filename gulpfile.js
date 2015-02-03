@@ -3,20 +3,18 @@
 var gulp = require('gulp'),
     less = require('gulp-less'),
     jade = require('gulp-jade'),
-    autoprefixer = require('gulp-autoprefixer'),
-    minifycss = require('gulp-minify-css'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
     imagemin = require('gulp-imagemin'),
     rename = require('gulp-rename'),
     concat = require('gulp-concat'),
     notify = require('gulp-notify'),
-    cache = require('gulp-cache'),
-    livereload = require('gulp-livereload'),
     webserver = require('gulp-webserver'),
     changed = require('gulp-changed'),
     del = require('del');
 
+var gutil = require('gulp-util');
+var plumber = require('gulp-plumber');
 
 
 
@@ -24,7 +22,7 @@ var gulp = require('gulp'),
 var root = {
   src: 'src/',
   build: 'public/',
-  bower_components: 'src/bower_components'
+  bower_components: './src/bower_components'
 };
 
 // Paths to the Sourcefiles
@@ -48,6 +46,7 @@ var files = {
     // JS Files
     js_libs : 'libs.js',
     js_holder: 'holder.js',
+    js_main: 'main.js',
 
     // Less Files
     less_index: 'index.less'
@@ -55,7 +54,7 @@ var files = {
 
 var config = {
   server: {
-    port: "8000",
+    port: 8000,
     open: false,
     livereload: true
   },
@@ -64,6 +63,10 @@ var config = {
 
 gulp.task('jade', function () {
   return gulp.src( src_paths.jade + '/Templates/**/*.jade' )
+    .pipe(plumber(function (error) {
+        gutil.log(error.message);
+        this.emit('end');
+    }))
     .pipe(changed( root.build ))
     .pipe(jade({
       pretty: true
@@ -77,15 +80,19 @@ gulp.task('jade', function () {
 
 // Compile LESS to CSS minify, autoprefix and copy to ./public/css/
 
-var LessPluginCleanCSS = require("less-plugin-clean-css"),
+var LessPluginCleanCSS = require('less-plugin-clean-css'),
     cleancss = new LessPluginCleanCSS({advanced: true});
 
 var LessPluginAutoPrefix = require('less-plugin-autoprefix'),
-    autoprefix= new LessPluginAutoPrefix({browsers: ["last 2 versions"]});
+    autoprefix= new LessPluginAutoPrefix({browsers: ['last 2 versions']});
 
 gulp.task('styles', function() {
   return gulp.src( src_paths.less + '/' + files.less_index )
-    .pipe(changed( build_paths.css ))
+    .pipe(plumber(function (error) {
+        gutil.log(error.message);
+        this.emit('end');
+    }))
+    //.pipe(changed( build_paths.css ))
     .pipe(less({
         plugins: [autoprefix, cleancss]
     }))
@@ -98,8 +105,13 @@ gulp.task('styles', function() {
 gulp.task('scripts', function() {
   return gulp.src([
       src_paths.scripts + '/' + files.js_libs ,
-      src_paths.scripts + '/' + files.js_holder
+      src_paths.scripts + '/' + files.js_holder ,
+      src_paths.scripts + '/' + files.js_main
     ])
+    .pipe(plumber(function (error) {
+        gutil.log(error.message);
+        this.emit('end');
+    }))
     .pipe(jshint( src_paths.scripts + '/.jshintrc'))
     //.pipe(jshint.reporter('default', { verbose: true }))
     .pipe(concat('main.js'))
@@ -117,7 +129,7 @@ gulp.task('scripts', function() {
 
 // Optimize images and copy files from ./src/images to ./build/img
 gulp.task('images', function() {
-  return gulp.src( src_paths.images )
+  return gulp.src( [src_paths.images + '.jpg', src_paths.images + '.png', src_paths.images + '.gif'] )
     .pipe(changed( build_paths.img ))
     .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
     .pipe(gulp.dest( build_paths.img ))
@@ -138,23 +150,16 @@ gulp.task('fonts', function() {
 });
 
 gulp.task('clean', function(cb) {
-    del([ build_paths.css , build_paths.js, build_paths.img, build_paths.fonts ], cb)
+    del([ build_paths.css , build_paths.js, build_paths.img, build_paths.fonts ], cb);
 });
 
 
 gulp.task('watch', ['webserver'], function() {
 
   // Watch .jade files
-  gulp.watch([
-    src_paths.jade + '/**/*.jade',    
-    src_paths.jade + '/Layouts/**/*.jade',
-    src_paths.jade + '/Partials/**/*.jade',
-    src_paths.jade + '/Partials/bootstrap/*.jade',
-    src_paths.jade + '/Partials/PageParts/*.jade',
-    src_paths.jade + '/Templates/**/*.jade'
-  ], ['jade']);
   // Watch .less files
   gulp.watch( src_paths.less + '/**/*.less', ['styles']);
+  gulp.watch( src_paths.jade + '/**/*.jade', ['jade']);
   // Watch .js files
   gulp.watch( src_paths.scripts + '/**/*.js', ['scripts']);
   // Watch image files
@@ -168,17 +173,17 @@ gulp.task('webserver', function() {
     .pipe(webserver({
       livereload: true,
       //directoryListing: true,
-      open: config.server.open,
-      port: config.server.port
+      open: true,
+      //port: config.server.port
     }));
 });
 
-gulp.task('compile', ['clean'], function(cb) {
+gulp.task('compile', ['clean'], function() {
   gulp.start('jade', 'styles', 'scripts', 'images', 'fonts');
 });
 
 // Default task
-gulp.task('start', ['clean'], function(cb) {
+gulp.task('start', ['clean'], function() {
     gulp.start('jade', 'styles', 'scripts', 'images', 'fonts', 'watch');
 }); 
 // Default task
@@ -193,7 +198,7 @@ gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'] )
 
 var bower = require('bower'),
     underscore = require('underscore'),
-    underscoreStr = require('underscore.string')
+    underscoreStr = require('underscore.string');
 
 
 gulp.task('bower', function(cb){
@@ -281,7 +286,7 @@ gulp.task('bower-less', function(){
 
 });
 
-gulp.task('bower-fonts', function(cb){
+gulp.task('bower-fonts', function(){
   var bootstrap_font_files = gulp.src( root.bower_components + '/bootstrap/fonts/**/*')
     .pipe(gulp.dest( root.src + 'fonts' ));
 
