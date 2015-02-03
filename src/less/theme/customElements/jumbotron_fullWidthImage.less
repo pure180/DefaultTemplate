@@ -1,0 +1,34 @@
+.jumbotron-fullwidthimg {
+
+  background-color: inherit;
+  width:100%;
+  height:100%;
+  max-width:100%;
+  background-position:center;
+  background-size:cover;
+  background-image: url('../img/jumbotron/01.jpg');
+
+  .container &,
+  .container-fluid & {
+    border-radius: @border-radius-large; // Only round corners at higher resolutions if contained in a container
+  }
+
+  .container {
+    max-width: 100%;
+  }
+
+  @media screen and (min-width: @screen-sm-min) {
+    padding: (@jumbotron-padding * 1.6) 0;
+
+    .container &,
+    .container-fluid & {
+      padding-left:  (@jumbotron-padding * 2);
+      padding-right: (@jumbotron-padding * 2);
+    }
+
+    h1,
+    .h1 {
+      font-size: (@font-size-base * 4.5);
+    }
+  }
+}
