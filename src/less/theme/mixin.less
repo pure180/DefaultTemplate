@@ -1,0 +1,68 @@
+// Create general margins, paddings and border
+.generate-directions(@name, @property, @value) {
+  .@{name}-top {
+    @{property}-top: @value;
+  }
+  .@{name}-bottom {
+    @{property}-bottom: @value;
+  }
+  .@{name}-left {
+    @{property}-left: @value;
+  }
+  .@{name}-right {
+    @{property}-right: @value;
+  }
+  .@{name} {
+    @{property}: @value;
+  }
+}
+
+// no-(padding|border|margin)
+.generate-directions(padding-none, padding, 0);
+.generate-directions(border-none, border, 0);
+.generate-directions(margin-none, margin, 0);
+
+// sm-(padding|border|margin)
+.generate-directions(padding-sm, padding, @padding-base-vertical);
+.generate-directions(border-sm, border, @border-size);
+.generate-directions(margin-sm, margin, @grid-gutter-width/2);
+
+// md-(padding|border|margin)
+.generate-directions(padding-md, padding, @padding-base-vertical*2);
+.generate-directions(border-md, border, @border-size*2);
+.generate-directions(margin-md, margin, @grid-gutter-width);
+
+// lg-(padding|border|margin)
+.generate-directions(padding-lg, padding, @padding-base-vertical*4);
+.generate-directions(border-lg, border, @border-size*3);
+.generate-directions(margin-lg, margin, @grid-gutter-width*2);
+
+/* Creatin Box-Shadow */
+.box-shadow(@style, @c) when (iscolor(@c)) {
+  -webkit-box-shadow: @style @c;
+  box-shadow: @style @c;
+}
+.box-shadow(@style, @alpha: 50%) when (isnumber(@alpha)) {
+  .box-shadow(@style, rgba(0,0,0, @alpha));
+}
+
+.text-shadow(@position: 0px 3px, @blur: 4px, @color: rgba(0, 0, 0, 0.3)) {
+  text-shadow: @position @blur @color;
+}
+
+/* Creating Borders */
+.border (@width: 1px, @style: solid, @color){
+  border: @width @style @color;
+}
+.border-top (@width: 1px, @style: solid, @color){
+  border-top: @width @style @color;
+}
+.border-right (@width: 1px, @style: solid, @color){
+  border-right: @width @style @color;
+}
+.border-bottom (@width: 1px, @style: solid, @color){
+  border-bottom: @width @style @color;
+}
+.border-left (@width: 1px, @style: solid, @color){
+  border-left: @width @style @color;
+}
