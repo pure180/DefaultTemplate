@@ -72,8 +72,8 @@ gulp.task('jade', function () {
       pretty: true
     }))
     .pipe(gulp.dest(root.build))
-    .pipe(notify({ 
-      message: 'Served Jade "<%= file.relative %>"!' 
+    .pipe(notify({
+      message: 'Served Jade "<%= file.relative %>"!'
     }));
 });
 
@@ -116,14 +116,14 @@ gulp.task('scripts', function() {
     //.pipe(jshint.reporter('default', { verbose: true }))
     .pipe(concat('main.js'))
     .pipe(gulp.dest( build_paths.js ))
-    .pipe(notify({ 
-      message: 'Served "./build/js/<%= file.relative %>"!' 
+    .pipe(notify({
+      message: 'Served "./build/js/<%= file.relative %>"!'
     }))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
     .pipe(gulp.dest( build_paths.js ))
-    .pipe(notify({ message: 
-      'Served "./build/js/<%= file.relative %>"!' 
+    .pipe(notify({ message:
+      'Served "./build/js/<%= file.relative %>"!'
     }));
 });
 
@@ -144,9 +144,9 @@ gulp.task('fonts', function() {
       .pipe(changed( build_paths.fonts ))
       .pipe(gulp.dest( build_paths.fonts ))
       .pipe(notify({
-        message: 'Copied "./build/fonts/<%= file.relative %>"' 
+        message: 'Copied "./build/fonts/<%= file.relative %>"'
       }));
- 
+
 });
 
 gulp.task('clean', function(cb) {
@@ -169,7 +169,7 @@ gulp.task('watch', ['webserver'], function() {
 });
 
 gulp.task('webserver', function() {
-  gulp.src('public')
+  gulp.src('./public')
     .pipe(webserver({
       livereload: true,
       //directoryListing: true,
@@ -185,9 +185,9 @@ gulp.task('compile', ['clean'], function() {
 // Default task
 gulp.task('start', ['clean'], function() {
     gulp.start('jade', 'styles', 'scripts', 'images', 'fonts', 'watch');
-}); 
+});
 // Default task
-gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'] ); 
+gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'] );
 
 
 
@@ -222,7 +222,7 @@ gulp.task('bundle-libraries-auto', ['bower'], function(){
     // package info and dependencies
     var info = require(bowerDir + '/' + name + '/bower.json');
     var dependencies = info.dependencies;
-    
+
     // add dependencies by repeat the step
     if(!!dependencies){
       underscore.each(dependencies, function(value, key){
@@ -231,7 +231,7 @@ gulp.task('bundle-libraries-auto', ['bower'], function(){
         }
       });
     }
-    
+
     // and then add this package into the packagesOrder array if they are not exist yet
     if(packagesOrder.indexOf(name) === -1){
       packagesOrder.push(name);
