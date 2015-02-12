@@ -169,7 +169,7 @@ gulp.task('watch', ['webserver'], function() {
 });
 
 gulp.task('webserver', function() {
-  gulp.src('./public')
+  gulp.src('public')
     .pipe(webserver({
       livereload: true,
       //directoryListing: true,
