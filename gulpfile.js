@@ -61,23 +61,6 @@ var config = {
 };
 
 
-gulp.task('jade', function () {
-  return gulp.src( src_paths.jade + '/Templates/**/*.jade' )
-    .pipe(plumber(function (error) {
-        gutil.log(error.message);
-        this.emit('end');
-    }))
-    .pipe(changed( root.build ))
-    .pipe(jade({
-      pretty: true
-    }))
-    .pipe(gulp.dest(root.build))
-    .pipe(notify({
-      message: 'Served Jade "<%= file.relative %>"!'
-    }));
-});
-
-
 // Compile LESS to CSS minify, autoprefix and copy to ./public/css/
 
 var LessPluginCleanCSS = require('less-plugin-clean-css'),
@@ -98,6 +81,23 @@ gulp.task('styles', function() {
     }))
     .pipe(gulp.dest( build_paths.css ))
     .pipe(notify({ message: 'We mixed it! now we have <%= file.relative %>. This looks awesome!' }));
+});
+
+
+gulp.task('jade', function () {
+  return gulp.src( src_paths.jade + '/Templates/**/*.jade' )
+    .pipe(plumber(function (error) {
+        gutil.log(error.message);
+        this.emit('end');
+    }))
+    .pipe(changed( root.build ))
+    .pipe(jade({
+      pretty: true
+    }))
+    .pipe(gulp.dest(root.build))
+    .pipe(notify({
+      message: 'Served Jade "<%= file.relative %>"!'
+    }));
 });
 
 
@@ -169,7 +169,13 @@ gulp.task('watch', ['webserver'], function() {
 });
 
 gulp.task('webserver', function() {
-  gulp.src('./public')
+  gulp.src([
+      './public',
+      './public/fonts',
+      './public/css',
+      './public/js',
+      './public/img'
+    ])
     .pipe(webserver({
       livereload: true,
       //directoryListing: true,
@@ -179,12 +185,12 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('compile', ['clean'], function() {
-  gulp.start('jade', 'styles', 'scripts', 'images', 'fonts');
+  gulp.start('styles', 'jade', 'scripts', 'images', 'fonts');
 });
 
 // Default task
-gulp.task('start', ['clean'], function() {
-    gulp.start('jade', 'styles', 'scripts', 'images', 'fonts', 'watch');
+gulp.task('start', ['compile', 'webserver', 'watch'], function() {
+
 });
 // Default task
 gulp.task('default', ['clean', 'jade', 'styles', 'scripts', 'images', 'fonts'] );
