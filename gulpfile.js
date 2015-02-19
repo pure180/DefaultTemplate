@@ -2,6 +2,7 @@
 
 var gulp = require('gulp'),
     less = require('gulp-less'),
+    autoprefixer = require('gulp-autoprefixer'),
     jade = require('gulp-jade'),
     jshint = require('gulp-jshint'),
     uglify = require('gulp-uglify'),
@@ -75,12 +76,29 @@ gulp.task('styles', function() {
         gutil.log(error.message);
         this.emit('end');
     }))
+    .pipe(less())
+    .pipe(autoprefixer({
+          browsers: [
+            "Android 2.3",
+            "Android >= 4",
+            "Chrome >= 20",
+            "Firefox >= 24",
+            "Explorer >= 8",
+            "iOS >= 6",
+            "Opera >= 12",
+            "Safari >= 6"
+          ],
+          cascade: false
+    }))
+    .pipe(gulp.dest( build_paths.css ))
+    .pipe(notify({ message: 'Build <%= file.relative %>' }))
+    .pipe(rename({suffix: '.min'}))
     //.pipe(changed( build_paths.css ))
     .pipe(less({
         plugins: [autoprefix, cleancss]
     }))
     .pipe(gulp.dest( build_paths.css ))
-    .pipe(notify({ message: 'We mixed it! now we have <%= file.relative %>. This looks awesome!' }));
+    .pipe(notify({ message: 'Build <%= file.relative %>' }));
 });
 
 
@@ -170,16 +188,16 @@ gulp.task('watch', ['webserver'], function() {
 
 gulp.task('webserver', function() {
   gulp.src([
-      './public',
-      './public/fonts',
-      './public/css',
-      './public/js',
-      './public/img'
+      'public',
+      'public/fonts',
+      'public/css',
+      'public/js',
+      'public/img'
     ])
     .pipe(webserver({
       livereload: true,
       //directoryListing: true,
-      open: true,
+      open: false,
       //port: config.server.port
     }));
 });
