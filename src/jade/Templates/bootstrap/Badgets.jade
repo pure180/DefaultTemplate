@@ -1,0 +1,11 @@
+//- bootstrap/Badgets.jade
+extends ../../Layouts/Default.jade
+block Vars
+  - var sub = true
+  - var page = {name: 'Badgets', url: 'Badgets.html', parent: 'Bootstrap CSS Elements', index: false}
+  - var active = page.name
+
+block main  
+  .row.space-bottom
+    //- Include Alerts
+    include ../../Partials/bootstrap/Badgets.jade 

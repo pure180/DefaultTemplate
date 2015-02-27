@@ -1,0 +1,66 @@
+//- bootstrap/All.jade
+extends ../../Layouts/Default.jade
+block Vars
+  - var sub = true
+  - var page = {name: 'All Components', url: 'all.html', parent: 'Bootstrap CSS Elements', index: false}
+  - var active = page.name
+
+block main
+  .row
+
+    //- Include Page-header
+    include ../../Partials/bootstrap/Page-header.jade
+
+    //- Include Breadcrumb
+    include ../../Partials/bootstrap/Breadcrumb.jade
+
+    //- Include Pagination
+    include ../../Partials/bootstrap/Pagination.jade
+
+    //- Include Pager
+    include ../../Partials/bootstrap/Pager.jade
+
+    .clearfix
+    hr.space-bottom
+
+    //- Include Labels
+    include ../../Partials/bootstrap/Labels.jade
+
+    //- Include Labels
+    include ../../Partials/bootstrap/Badgets.jade
+
+    .clearfix
+    hr.space-bottom
+
+    //- Include Thumbnails
+    include ../../Partials/bootstrap/Thumbnail.jade 
+
+    .clearfix
+    hr.space-bottom
+
+  .row
+
+    //- Include Alerts
+    include ../../Partials/bootstrap/Alerts.jade 
+
+    //- Include Progress-bars
+    include ../../Partials/bootstrap/Progress-bars.jade 
+
+    .clearfix
+    hr.space-bottom
+
+  .row
+    //- Include Media-object
+    include ../../Partials/bootstrap/Media-object.jade
+
+    .clearfix
+    hr.space-bottom
+
+    //- Include List-group
+    include ../../Partials/bootstrap/List-group.jade
+
+    .clearfix
+    hr.space-bottom
+
+    //- Include Panels
+    include ../../Partials/bootstrap/Panels.jade
