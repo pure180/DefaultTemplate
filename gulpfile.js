@@ -202,12 +202,12 @@ gulp.task('webserver', function() {
     }));
 });
 
-gulp.task('compile', ['clean'], function() {
+gulp.task('compile', ['clean', 'watch'], function() {
   gulp.start('styles', 'jade', 'scripts', 'images', 'fonts');
 });
 
 // Default task
-gulp.task('start', ['compile', 'webserver', 'watch'], function() {
+gulp.task('start', ['compile', 'webserver'], function() {
 
 });
 // Default task
