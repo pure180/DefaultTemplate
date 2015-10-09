@@ -22,20 +22,31 @@
 .generate-directions(border-none, border, 0);
 .generate-directions(margin-none, margin, 0);
 
-// sm-(padding|border|margin)
+// small-(padding|border|margin)
 .generate-directions(padding-small, padding, @padding-base-vertical);
 .generate-directions(border-small, border, @border-size);
 .generate-directions(margin-small, margin, @grid-gutter-width/2);
 
-// md-(padding|border|margin)
+// middle-(padding|border|margin)
 .generate-directions(padding-middle, padding, @padding-base-vertical*2);
 .generate-directions(border-middle, border, @border-size*2);
 .generate-directions(margin-middle, margin, @grid-gutter-width);
 
-// lg-(padding|border|margin)
-.generate-directions(padding-large, padding, @padding-base-vertical*4);
+// large-(padding|border|margin)
+.generate-directions(padding-large, padding, @padding-large-vertical*2);
 .generate-directions(border-large, border, @border-size*3);
 .generate-directions(margin-large, margin, @grid-gutter-width*2);
+
+.generate-directions(padding-xxlarge, padding, @grid-gutter-width*2.33);
+.generate-directions(margin-xxlarge, margin, @grid-gutter-width*2.33);
+
+@media (max-width: @screen-xs-max){
+
+  .generate-directions(margin-large, margin, @grid-gutter-width);
+
+  .generate-directions(padding-xxlarge, padding, @grid-gutter-width*1.33);
+  .generate-directions(margin-xxlarge, margin, @grid-gutter-width*1.33);
+}
 
 /* Creatin Box-Shadow */
 .box-shadow(@style, @c) when (iscolor(@c)) {
@@ -65,4 +76,8 @@
 }
 .border-left (@width: 1px, @style: solid, @color){
   border-left: @width @style @color;
+}
+
+.transition (@property, @duration: 0.3s, @timing: ease, @delay) {
+  transition: @property @duration @timing @delay;
 }
