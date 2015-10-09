@@ -46,7 +46,7 @@ var build_paths = {
 var files = {
     // JS Files
     js_libs :           'libs.js',
-    js_scroller:        'apps/jquery.dpscroller.js',
+    js_scroller:        'apps/jquery.changeonscroll.js',
     js_triggerresize:   'apps/jquery.triggerresize.js',
     js_plugins:         'plugins.js',
     js_main:            'main.js',
