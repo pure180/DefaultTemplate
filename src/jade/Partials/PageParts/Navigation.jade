@@ -34,3 +34,55 @@ nav.navbar.navbar-default
               li.active: a(href=val, title=key)= key
             else
               li: a(href=val, title=key)= key
+      .allwrap
+        button.btn.btn-default.sidenav.open(type="button") toggle
+        .sidenavwrap
+          ul.nav
+            each val, key in nav
+              if hasSub.sub1 === key
+                if page.parent === key 
+                  li
+                    a= key
+                      span.caret
+                    ul(role='menu')
+                      each val, key in subnav
+                        li: a(href=val, title=key)= key
+                else
+                  li.dropdown
+                    a= key
+                      span.caret
+                    ul.nav(role='menu')
+                      each val, key in subnav
+                        li: a(href=val, title=key)= key
+              else
+                if page.name === key
+                  li.active: a(href=val, title=key)= key
+                else
+                  li: a(href=val, title=key)= key
+          .clearfix
+      
+        button.btn.btn-default(type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample") toggle
+        #collapseExample.testwrap.collapse
+          ul.nav
+            each val, key in nav
+              if hasSub.sub1 === key
+                if page.parent === key 
+                  li
+                    a= key
+                      span.caret
+                    ul(role='menu')
+                      each val, key in subnav
+                        li: a(href=val, title=key)= key
+                else
+                  li.dropdown
+                    a= key
+                      span.caret
+                    ul.nav(role='menu')
+                      each val, key in subnav
+                        li: a(href=val, title=key)= key
+              else
+                if page.name === key
+                  li.active: a(href=val, title=key)= key
+                else
+                  li: a(href=val, title=key)= key
+          .clearfix

@@ -7,3 +7,29 @@
 
 // Import Custom Elements
 @import "customElements/jumbotron_fullWidthImage.less";
+
+
+.allwrap {
+  position: relative;
+  //margin-left: 334px;
+  float: left;
+}
+
+.sidenavwrap {
+  position: absolute;
+  z-index: 1050;
+  width: 300px;
+  height: auto;
+  display: none;
+
+  @media (max-width: @screen-xs-max){
+    position: relative;
+    display: block !important;
+  }
+
+}
+
+.testwrap{
+
+  background-color: #fff;
+}

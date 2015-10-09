@@ -54,11 +54,11 @@ html(lang='en')
 
     block scripts
       if sub
-        script(src='../js/main.js')
+        script(src='../js/main.min.js')
       else  
         script(src='js/main.js')
 
       script(type='text/javascript').
         jQuery(document).ready(function(){
-          $('body').fullWidthBgImg();
+          $('.allwrap').toggleNav();
         });
