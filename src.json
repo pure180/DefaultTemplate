@@ -1,0 +1,20 @@
+{
+  "production" : true,
+  "dist": {
+    "html":    "./dist",
+    "css":     "./dist/css",
+    "js":      "./dist/js",
+    "fonts":   "./dist/fonts/",
+    "img":     "./dist/img"
+  },
+  "src": {
+    "jade":    "./src/jade/templates/",
+    "less":    "./src/less/",
+    "js":      "./src/js/",
+    "fonts":   "./src/fonts/",
+    "img":     "./src/img/",
+    "js_libs": "./src/js_libs"
+  },
+  "bower" : "./src/bower_components",
+  "bowerfile" : "./bower.json"
+}
