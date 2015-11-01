@@ -1,5 +1,3 @@
-//- test.jade
-
 doctype html
 html(lang='en')
 
@@ -13,52 +11,21 @@ html(lang='en')
       include ../Partials/Head.jade
   
   body
-
-    // HEADER Start
+    // START <header>
     header
       block header
         //- Include Navbar-default
-        include ../Partials/PageParts/Navigation.jade
-
-        //- Include Breadcrumb
-        if !page.index
-          include ../Partials/PageParts/Breadcrumb.jade
-    // HEADER End
-
-    if page.index
-      // JUMBOTRON Start
-      block jumbotron
-        //- Full width  
-        .jumbotron
-          .container
-            .row
-              .col-md-12
-                h1 Jumbotron
-                h2 Full width and without corners
-                p This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.
-                a.btn.btn-primary.btn-lg(href='#' role='button') Learn more
-          // img.img-responsive(src='img/jumbotron/01.jpg', alt='alt')
-      // JUMBOTRON End
-
-    if page.name === 'Jumbotron'
-      main
-        block main
-    else
-      main.container
-        block main
-
-    footer   
-      block footer
-        //- Include Footer
-        include ../Partials/Footer.jade
+        include ../Partials/PageParts/Header/Navigation.jade
+    // END </header>
+    // START <main>
+    main
+      block main
+    //END </main>
+       
+    block footer
+      //- Include Navbar-default
+      include ../Partials/PageParts/Footer/Footer.jade
 
     block scripts
-      if sub
-        script(src='../js/main.js')
-      else  
-        script(src='js/main.js')
-
-      script(type='text/javascript').
-        jQuery(document).ready(function(){
-          $('body').fullWidthBgImg();
-        });
+      script(src='js/main.min.js')
+      script(type="text/javascript").

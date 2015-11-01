@@ -3,41 +3,6 @@ extends ../Layouts/Default.jade
 
 block Vars
   - var sub = false
-  - var page = {name: 'Home', url: '/', parent: '', index: true}
-  - var active = 'Home'
+  - var page = {title: 'Page Title', name: 'Start', url: '/', parent: '', index: true}
 
 block main
-  .row
-    .col-md-12.space-bottom
-      h3.header-main
-        hr
-        span Main Title
-    .col-md-4.col-sm-4
-      .panel.panel-teaser
-        .panel-heading
-          img.img-responsive.img-circle.margin-center(data-src='holder.js/150x150' alt='...')
-        .panel-body.text-center
-          h3 Panel heading
-          p #{dummy.text120}
-          a.btn.btn-primary(href="#", title="") Read more 
-            span.glyphicon.glyphicon-chevron-right
-    .col-md-4.col-sm-4
-      .panel.panel-teaser
-        .panel-heading
-          img.img-responsive.img-circle.margin-center(data-src='holder.js/150x150' alt='...')
-        .panel-body.text-center
-          h3 Panel heading
-          p #{dummy.text120}
-          a.btn.btn-primary(href="#", title="") Read more 
-            span.glyphicon.glyphicon-chevron-right
-    .col-md-4.col-sm-4
-      .panel.panel-teaser
-        .panel-heading
-          img.img-responsive.img-circle.margin-center(data-src='holder.js/150x150' alt='...')
-        .panel-body.text-center
-          h3 Panel heading
-          p #{dummy.text120}
-          a.btn.btn-primary(href="#", title="") Read more 
-            span.glyphicon.glyphicon-chevron-right
-
-
