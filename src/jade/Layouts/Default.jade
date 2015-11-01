@@ -2,30 +2,36 @@ doctype html
 html(lang='en')
 
   block defaultVars
-    include ../Configuration/Defaults.jade
+    include ../configuration/Defaults
   block Vars
 
   head
-    block head
-      //- Include <HEAD></HEAD>
-      include ../Partials/Head.jade
+    block meta
+      include ../partials/meta
+    block css
+      include ../partials/css
   
   body
     // START <header>
     header
       block header
         //- Include Navbar-default
-        include ../Partials/PageParts/Header/Navigation.jade
+        include ../partials/header/header
     // END </header>
+
     // START <main>
     main
       block main
-    //END </main>
-       
-    block footer
-      //- Include Navbar-default
-      include ../Partials/PageParts/Footer/Footer.jade
+    // END </main>
 
+    // START <footer>
+    footer
+      block footer
+        //- Include Navbar-default
+        include ../partials/footer/footer
+    // END </footer>
+    
+    // START Scripts
     block scripts
-      script(src='js/main.min.js')
-      script(type="text/javascript").
+      include ../partials/js
+    // END Scripts

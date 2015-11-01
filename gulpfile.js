@@ -4,11 +4,10 @@ var gulp = require('gulp');
 var del = require('del');
 var plugins = require('gulp-load-plugins')();
 var webserver = require('gulp-webserver');
-var del = require('del');
 var notify = require('gulp-notify');
 var concat = require('gulp-concat');
 var bower = require('bower');
-var  underscore = require('underscore');
+var underscore = require('underscore');
 var underscoreStr = require('underscore.string');
 var gutil = require('gulp-util');
 var jshint = require('gulp-jshint');
@@ -38,6 +37,7 @@ gulp.task('fonts', require('./gulp_task/fonts')(gulp, plugins, path));
 gulp.task('setWatch', function() {
     global.isWatching = true;
 });
+
 
 gulp.task('reload', function() {
   gulp.src('./dist')
@@ -181,33 +181,24 @@ gulp.task('bower-fonts', function(){
  * GULP TASKS
  * -------------------------------------------------------------------------- */
 
-gulp.task('watch', ['reload', 'setWatch', 'jade'], function() {
-  gulp.watch( path.src.jade + '**/*.jade', ['jade']);
-  gulp.watch( path.src.less + '**/*.less', ['less']);
-  gulp.watch( path.src.js + '**/*.js', ['scripts']);
-  gulp.watch( path.src.img + '**/*.*', ['images']);
-  gulp.watch( path.src.fonts + '**/*.*', ['fonts']);
+gulp.task('watch', ['reload', 'setWatch', 'jade', 'less', 'scripts', 'images', 'fonts' ], function() {
+  gulp.watch( path.watch.jade, ['setWatch', 'jade']);
+  gulp.watch( path.watch.less, ['less']);
+  gulp.watch( path.watch.js, ['scripts']);
+  gulp.watch( path.watch.img, ['images']);
+  gulp.watch( path.watch.fonts, ['fonts']);
 });
 
-gulp.task('bower-update', ['bower'], function() {
-    gulp.start(['bower-js-libs', 'bower-less', 'bower-fonts']);
+gulp.task('build', ['jade', 'less', 'scripts', 'images', 'fonts']);
+
+gulp.task('bower-update', ['bower'], function(cb) {
+    runSequence(['bower-js-libs', 'bower-less', 'bower-fonts'], cb);
 });
 
-gulp.task('compile', ['watch'], function(cb){
-  gulp.start(['less', 'scripts', 'images', 'fonts'], cb);
+gulp.task('create', ['clean', 'bower-update'], function(cb) {
+  runSequence('build', cb);
 });
 
-gulp.task('build', function(cb) {
-  runSequence('clean',
-              ['bower-update'],
-              'compile',
-              cb);
+gulp.task('start', ['clean', 'bower-update'], function(cb) {
+  runSequence('watch', cb);
 });
-
-gulp.task('create', ['clean'], function(cb){
-  gulp.start(['compile'], cb);
-});
-
-gulp.task('start', ['watch']);
-
-//gulp.task('start')
