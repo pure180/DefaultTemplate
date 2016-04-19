@@ -1,7 +1,6 @@
 #Repo Ignores
 dist
 node_modules
-gulp_task
 src/img
 src/fonts
 src/bower_components
