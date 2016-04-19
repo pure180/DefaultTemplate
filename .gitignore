@@ -7,6 +7,7 @@ src/fonts
 src/bower_components
 src/less/bootstrap
 src/less/font-awesome
+npm-debug.log
 
 # Windows image file caches
 Thumbs.db
