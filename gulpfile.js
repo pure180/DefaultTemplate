@@ -155,7 +155,7 @@ gulp.task('bower-less', function(){
   var bootstrap_less_files = gulp.src( path.bower + '/bootstrap/less/**/*')
     .pipe(gulp.dest( path.src.less + '/bootstrap' ));
 
-  var fontawesome_less_files = gulp.src( path.bower + '/font-awesome/less/**/*')
+  var fontawesome_less_files = gulp.src( path.bower + '/fontawesome/less/**/*')
     .pipe(gulp.dest( path.src.less + '/font-awesome' ));
 
   return bootstrap_less_files, fontawesome_less_files;
@@ -166,7 +166,7 @@ gulp.task('bower-fonts', function(){
   var bootstrap_font_files = gulp.src( path.bower + '/bootstrap/fonts/**/*')
     .pipe(gulp.dest( path.dist.fonts ));
 
-  var fontawesome_font_files = gulp.src( path.bower + '/font-awesome/fonts/**/*')
+  var fontawesome_font_files = gulp.src( path.bower + '/fontawesome/fonts/**/*')
     .pipe(gulp.dest( path.dist.fonts));
 
   return bootstrap_font_files, fontawesome_font_files;
