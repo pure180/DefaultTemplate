@@ -1,7 +1,6 @@
 'use-strict';
 var gulp = require('gulp');
 var pug = require('gulp-pug');
-var changed = require('gulp-changed');
 var notify = require('gulp-notify');
 var gutil = require('gulp-util');
 var plumber = require('gulp-plumber');
