@@ -1,6 +1,6 @@
 {
   "name": "DefaultTemplate",
-  "version": "2.0.0",
+  "version": "1.0.2",
   "authors": [
     "Daniel Pfisterer (info@daniel-pfisterer.de)"
   ],
@@ -13,8 +13,8 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.5",
-    "fontawesome": "~4.4.0"
+    "bootstrap": "~3.3.6",
+    "fontawesome": "~4.6.1"
   },
   "homepage": "https://github.com/pure180/DefaultTemplate"
 }
