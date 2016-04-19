@@ -42,10 +42,10 @@ gulp.task('setWatch', function() {
 gulp.task('reload', function() {
   gulp.src('./dist')
     .pipe(webserver({
-      livereload: webserver.livereload,
-      directoryListing: webserver.directoryListing,
-      open: webserver.open,
-      port: webserver.port
+      livereload: server.livereload,
+      directoryListing: server.directoryListing,
+      open: server.open,
+      port: server.port
     }));
 });
 
