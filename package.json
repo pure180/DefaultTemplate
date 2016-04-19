@@ -26,7 +26,8 @@
     "underscore.string": "^3.3.4"
   },
   "devDependencies": {
-    "pug" : "^2.0.0-alpha6"
+    "jshint": "^2.0.0",
+    "pug": "^2.0.0-alpha6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
