@@ -16,7 +16,7 @@
     "js_libs": "src/js_libs"
   },
   "watch": {
-    "jade":    "src/jade/**/*.jade",
+    "jade":    "src/jade/**/*.pug",
     "less":    "src/less/**/*.less",
     "js":      "src/js/**/*.js",
     "fonts":   "src/fonts/**/*.*",

@@ -25,7 +25,7 @@ module.exports = function (gulp, plugins, path) {
         }));
     };
 
-    return jade_task(path.src.jade + '**/*.jade', path.dist.html, 'Served Jade "<%= file.relative %>"!' );
+    return jade_task(path.src.jade + '**/*.pug', path.dist.html, 'Served Jade "<%= file.relative %>"!' );
 
   };
 };
