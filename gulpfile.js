@@ -34,11 +34,6 @@ gulp.task('scripts', require('./gulp_task/scripts')(gulp, plugins, path));
 gulp.task('images', require('./gulp_task/images')(gulp, plugins, path));
 gulp.task('fonts', require('./gulp_task/fonts')(gulp, plugins, path));
 
-gulp.task('setWatch', function() {
-    global.isWatching = true;
-});
-
-
 gulp.task('reload', function() {
   gulp.src('./dist')
     .pipe(webserver({
@@ -181,8 +176,8 @@ gulp.task('bower-fonts', function(){
  * GULP TASKS
  * -------------------------------------------------------------------------- */
 
-gulp.task('watch', ['reload', 'setWatch', 'jade', 'less', 'scripts', 'images', 'fonts' ], function() {
-  gulp.watch( path.watch.jade, ['setWatch', 'jade']);
+gulp.task('watch', ['reload'], function() {
+  gulp.watch( path.watch.jade, ['jade']);
   gulp.watch( path.watch.less, ['less']);
   gulp.watch( path.watch.js, ['scripts']);
   gulp.watch( path.watch.img, ['images']);
@@ -199,6 +194,4 @@ gulp.task('create', ['clean', 'bower-update'], function(cb) {
   runSequence('build', cb);
 });
 
-gulp.task('start', ['clean', 'bower-update'], function(cb) {
-  runSequence('watch', cb);
-});
+gulp.task('start', ['clean', 'build', 'watch', 'bower-update']);
