@@ -3,12 +3,12 @@
 ### Setup
 #### Requirements
 
-* nodejs
-* npm
+* nodejs v^5+
+* npm v^3.8+
 * bower
 * gulp
 
-#### Install 
+#### Install
 * Download NodeJs from [http://nodejs.org/download/] and install it.
 * Install gulp global, run > `npm install gulp -g`
 * Install bower global, run > `npm install bower -g`
