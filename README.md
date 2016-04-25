@@ -1,5 +1,5 @@
 # Bootstrap, Jade and LESS Template-App
-[![Build Status][travis-image]][travis-url]  [![Dependency Status][depstat-image]][depstat-url]
+[![Build Status](https://travis-ci.org/pure180/DefaultTemplate.svg?branch=master)](https://travis-ci.org/pure180/DefaultTemplate)
 ### Setup
 #### Requirements
 
