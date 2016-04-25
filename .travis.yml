@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "5"
+  - "5.1"
+  - "4"
+  - "4.2"
+  - "4.1"
+  - "4.0"
+  - "iojs"
+before_script:
+  - npm install gulp -g
+  - npm install bower -g
+  - npm install
+  - bower update
+  - jspm install
+script:
+  - gulp bower:init
+  - gulp build
+cache:
+  - node_modules

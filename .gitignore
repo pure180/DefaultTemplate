@@ -5,6 +5,7 @@ src/img
 src/fonts
 src/bower_components
 src/less/bootstrap
+src/less/fontawesome
 src/less/font-awesome
 npm-debug.log
 
