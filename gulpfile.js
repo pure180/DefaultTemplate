@@ -15,6 +15,7 @@ var uglify = require('gulp-uglify');
 var plumber = require('gulp-plumber');
 var rename = require('gulp-rename');
 var runSequence = require('run-sequence');
+var mainBowerFiles = require('main-bower-files');
 var path = require('./src.json');
 
 var server = {
@@ -23,6 +24,24 @@ var server = {
   livereload:       true,
   directoryListing: false
 };
+
+/* -------------------------------------------------------------------------- *
+ * Helper Functions
+ * -------------------------------------------------------------------------- */
+
+var copy = function (src, dist) {
+  return gulp.src( src )
+    .pipe(plumber(function (error) {
+        gutil.log(error.message);
+        this.emit('end');
+    }))
+    .pipe(plumber(function (error) {
+        gutil.log(error.message);
+        this.emit('end');
+    }))
+    .pipe(gulp.dest( dist ));
+};
+
 
 /* -------------------------------------------------------------------------- *
  * APLIKATION TASKS
@@ -58,118 +77,47 @@ gulp.task('clean', function() {
  * BOWER TASKS
  * -------------------------------------------------------------------------- */
 
-gulp.task('bower', function(cb){
+gulp.task('bower:get', function(cb){
   bower.commands.install([], {save: true}, {})
     .on('end', function(installed){
       cb(); // notify gulp that this task is finished
     });
 });
 
-var bundle_bower_libraries = function(path, extension) {
-  var bowerFile = require('./bower.json');
-  var bowerPackages = bowerFile.dependencies;
-  var bowerDir = path.bower;
-  var packagesOrder = [];
-  var exclude = [];
-  var mainFiles = [];
-
-  // Function for adding package name into packagesOrder array in the right order
-  function addPackage(name){
-    // package info and dependencies
-    var info = require(bowerDir + '/' + name + '/bower.json');
-    var dependencies = info.dependencies;
-
-    // add dependencies by repeat the step
-    if(!!dependencies){
-      underscore.each(dependencies, function(value, key){
-        if(exclude.indexOf(key) === -1){
-          addPackage(key);
-        }
-      });
-    }
-
-    // and then add this package into the packagesOrder array if they are not exist yet
-    if(packagesOrder.indexOf(name) === -1){
-      packagesOrder.push(name);
-    }
-  }
-
-  // calculate the order of packages
-  underscore.each(bowerPackages, function(value, key){
-    if(exclude.indexOf(key) === -1){ // add to packagesOrder if it's not in exclude
-      addPackage(key);
-    }
-  });
-
-  // get the main files of packages base on the order
-  underscore.each(packagesOrder, function(bowerPackage){
-    var info = require(bowerDir + '/' + bowerPackage + '/bower.json');
-    var main = info.main;
-    var mainFile = main;
-
-    // get only the .js file if mainFile is an array
-    if(underscore.isArray(main)){
-      underscore.each(main, function(file, extension){
-        if(underscoreStr.endsWith(file, extension)){
-          mainFile = file;
-        }
-      });
-    }
-
-    // make the full path
-    mainFile = bowerDir + '/' + bowerPackage + '/' + mainFile;
-
-    // only add the main file if it's a js file
-    if(underscoreStr.endsWith(mainFile, extension)){
-      mainFiles.push(mainFile);
-    }
-  });
-
-  // run the gulp stream
-  return gulp.src(mainFiles)
+gulp.task('bower:js', function() {
+  return gulp.src(mainBowerFiles('**/*.js'))
     .pipe(plumber(function (error) {
         gutil.log(error.message);
         this.emit('end');
     }))
-    .pipe(jshint('.jshintrc'))
-    //.pipe(jshint.reporter('default', { verbose: true }))
-    .pipe(concat('libs.js'))
+    .pipe(jshint( '.jshintrc'))
+    .pipe(concat( 'libs.js' ))
     .pipe(gulp.dest( path.dist.js ))
     .pipe(notify({
-      message: 'Served "./build/js/<%= file.relative %>"!'
+      message: 'Build <%= file.relative %>'
     }))
     .pipe(rename({suffix: '.min'}))
     .pipe(uglify())
     .pipe(gulp.dest( path.dist.js ))
-    .pipe(notify({ message:
-      'Served "./build/js/<%= file.relative %>"!'
+    .pipe(notify({
+      message: 'Build <%= file.relative %>'
     }));
-
-};
-
-gulp.task('bower-js-libs', function(){
-  return bundle_bower_libraries(path, '.js');
 });
 
-gulp.task('bower-less', function(){
-  var bootstrap_less_files = gulp.src( path.bower + '/bootstrap/less/**/*')
-    .pipe(gulp.dest( path.src.less + '/bootstrap' ));
-
-  var fontawesome_less_files = gulp.src( path.bower + '/fontawesome/less/**/*')
-    .pipe(gulp.dest( path.src.less + '/font-awesome' ));
-
-  return bootstrap_less_files, fontawesome_less_files;
-
+/* Copy Bower Fonts */
+gulp.task('bower:fonts', function() {
+  return copy([path.bower + '/bootstrap/fonts/**/*.*', path.bower + '/fontawesome/fonts/**/*.*'], path.dist.fonts);
 });
 
-gulp.task('bower-fonts', function(){
-  var bootstrap_font_files = gulp.src( path.bower + '/bootstrap/fonts/**/*')
-    .pipe(gulp.dest( path.dist.fonts ));
+/* Copy Bower Less */
+gulp.task('bower:less', function() {
+  return copy(path.bower + '/bootstrap/less/**/*.less', path.src.less + '/bootstrap'),
+    copy(path.bower + '/fontawesome/less/**/*.less', path.src.less + '/fontawesome');
+});
 
-  var fontawesome_font_files = gulp.src( path.bower + '/fontawesome/fonts/**/*')
-    .pipe(gulp.dest( path.dist.fonts));
-
-  return bootstrap_font_files, fontawesome_font_files;
+/*  Bower general task */
+gulp.task('bower:init', ['bower:get'], function(){
+  gulp.start('bower:js', 'bower:less', 'bower:fonts');
 });
 
 /* -------------------------------------------------------------------------- *
@@ -190,8 +138,8 @@ gulp.task('bower-update', ['bower'], function(cb) {
     runSequence(['bower-js-libs', 'bower-less', 'bower-fonts'], cb);
 });
 
-gulp.task('create', ['clean', 'bower-update'], function(cb) {
+gulp.task('create', ['clean', 'bower:init'], function(cb) {
   runSequence('build', cb);
 });
 
-gulp.task('start', ['clean', 'build', 'watch', 'bower-update']);
+gulp.task('start', ['clean', 'build', 'watch', 'bower:init']);
