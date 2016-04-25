@@ -1,5 +1,5 @@
 # Bootstrap, Jade and LESS Template-App
-
+[![Build Status][travis-image]][travis-url]  [![Dependency Status][depstat-image]][depstat-url]
 ### Setup
 #### Requirements
 
