@@ -16,5 +16,6 @@ before_script:
 script:
   - gulp bower:init
   - gulp build
+  - gulp create
 cache:
   - node_modules
