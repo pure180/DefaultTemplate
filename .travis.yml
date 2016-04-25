@@ -12,7 +12,6 @@ before_script:
   - npm install bower -g
   - npm install
   - bower update
-  - jspm install
 script:
   - gulp bower:init
   - gulp build
