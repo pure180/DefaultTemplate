@@ -35,10 +35,6 @@ var copy = function (src, dist) {
         gutil.log(error.message);
         this.emit('end');
     }))
-    .pipe(plumber(function (error) {
-        gutil.log(error.message);
-        this.emit('end');
-    }))
     .pipe(gulp.dest( dist ));
 };
 
