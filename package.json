@@ -32,8 +32,10 @@
     "pug": "^2.0.0-alpha6"
   },
   "scripts": {
-    "build" : "gulp build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "init" : "npm install && bower install",
+    "build" : "gulp clean && gulp bower && gulp build",
+    "serve" : "gulp clean && gulp bower && gulp build && gulp watch",
+    "test": "gulp bower && gulp jade && gulp less && gulp scripts && gulp images && gulp fonts && gulp clean"
   },
   "repository": {
     "type": "git",

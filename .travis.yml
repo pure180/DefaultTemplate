@@ -7,11 +7,9 @@ notifications:
 before_script:
   - npm install gulp -g
   - npm install bower -g
-  - npm install
-  - bower update
+  - npm run init
 script:
-  - gulp bower:init
-  - gulp build
-  - gulp create
+  - npm run test
+  - npm run build
 cache:
   - node_modules

@@ -69,6 +69,17 @@ gulp.task('clean', function() {
     ]);
 });
 
+gulp.task('watch', ['reload'], function() {
+  gulp.watch( path.watch.jade, ['jade']);
+  gulp.watch( path.watch.less, ['less']);
+  gulp.watch( path.watch.js, ['scripts']);
+  gulp.watch( path.watch.img, ['images']);
+  gulp.watch( path.watch.fonts, ['fonts']);
+});
+
+gulp.task('build', ['jade', 'less', 'scripts', 'images', 'fonts']);
+
+
 /* -------------------------------------------------------------------------- *
  * BOWER TASKS
  * -------------------------------------------------------------------------- */
@@ -112,26 +123,6 @@ gulp.task('bower:less', function() {
 });
 
 /*  Bower general task */
-gulp.task('bower:init', ['bower:get'], function(){
+gulp.task('bower', ['bower:get'], function(){
   gulp.start('bower:js', 'bower:less', 'bower:fonts');
 });
-
-/* -------------------------------------------------------------------------- *
- * GULP TASKS
- * -------------------------------------------------------------------------- */
-
-gulp.task('watch', ['reload'], function() {
-  gulp.watch( path.watch.jade, ['jade']);
-  gulp.watch( path.watch.less, ['less']);
-  gulp.watch( path.watch.js, ['scripts']);
-  gulp.watch( path.watch.img, ['images']);
-  gulp.watch( path.watch.fonts, ['fonts']);
-});
-
-gulp.task('build', ['jade', 'less', 'scripts', 'images', 'fonts']);
-
-gulp.task('create', ['clean', 'bower:init'], function(cb) {
-  runSequence('build', cb);
-});
-
-gulp.task('start', ['clean', 'build', 'watch', 'bower:init']);
