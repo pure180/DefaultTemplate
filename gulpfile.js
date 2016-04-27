@@ -130,10 +130,6 @@ gulp.task('watch', ['reload'], function() {
 
 gulp.task('build', ['jade', 'less', 'scripts', 'images', 'fonts']);
 
-gulp.task('bower-update', ['bower'], function(cb) {
-    runSequence(['bower-js-libs', 'bower-less', 'bower-fonts'], cb);
-});
-
 gulp.task('create', ['clean', 'bower:init'], function(cb) {
   runSequence('build', cb);
 });
