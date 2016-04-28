@@ -1,15 +1,17 @@
 var gulp = require('gulp');
 var less = require('gulp-less');
 var autoprefixer = require('gulp-autoprefixer');
+var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 var notify = require('gulp-notify');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
+var cleanCSS = require('gulp-clean-css');
 
-var LessPluginCleanCSS = require('less-plugin-clean-css'),
-    cleancss = new LessPluginCleanCSS({advanced: true});
+//var LessPluginCleanCSS = require('less-plugin-clean-css'),
+    //cleancss = new LessPluginCleanCSS({advanced: true});
 
-module.exports = function (gulp, plugins, path) {
+module.exports = function (gulp, plugins, path, minify) {
   return function () {
     var less_task = function(src, dist, note){
       return gulp.src( src )
@@ -17,6 +19,7 @@ module.exports = function (gulp, plugins, path) {
             gutil.log(error.message);
             this.emit('end');
         }))
+        .pipe(sourcemaps.init())
         .pipe(less())
         .pipe(autoprefixer({
               browsers: [
@@ -33,13 +36,14 @@ module.exports = function (gulp, plugins, path) {
               ],
               cascade: true
         }))
+        
         .pipe(gulp.dest( dist ))
         .pipe(notify({ message: note }))
+
         .pipe(rename({suffix: '.min'}))
         //.pipe(changed( build_paths.css ))
-        .pipe(less({
-            plugins: [cleancss]
-        }))
+        .pipe(cleanCSS({compatibility: 'ie8'}))
+        .pipe(sourcemaps.write('./'))
         .pipe(gulp.dest( dist ))
         .pipe(notify({ message: note }));
     };

@@ -44,6 +44,7 @@ var copy = function (src, dist) {
  * -------------------------------------------------------------------------- */
 
 gulp.task('jade', require('./gulp_task/jade')(gulp, plugins, path));
+//Add Sourcemaps to less compiler
 gulp.task('less', require('./gulp_task/less')(gulp, plugins, path));
 gulp.task('scripts', require('./gulp_task/scripts')(gulp, plugins, path));
 gulp.task('images', require('./gulp_task/images')(gulp, plugins, path));

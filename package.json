@@ -18,6 +18,7 @@
     "gulp-plumber": "^1.1.0",
     "gulp-pug": "^2.0.0",
     "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.0.0-alpha",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "gulp-webserver": "^0.9.1",
@@ -28,13 +29,14 @@
     "underscore.string": "^3.3.4"
   },
   "devDependencies": {
+    "gulp-clean-css": "^2.0.6",
     "jshint": "^2.9.1",
     "pug": "^2.0.0-alpha6"
   },
   "scripts": {
-    "init" : "npm install && bower install",
-    "build" : "gulp clean && gulp bower && gulp build",
-    "serve" : "gulp clean && gulp bower && gulp build && gulp watch",
+    "init": "npm install && bower install",
+    "build": "gulp clean && gulp bower && gulp build",
+    "serve": "gulp clean && gulp bower && gulp build && gulp watch",
     "test": "gulp bower && gulp jade && gulp less && gulp scripts && gulp images && gulp fonts && gulp clean"
   },
   "repository": {
