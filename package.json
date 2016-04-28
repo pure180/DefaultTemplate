@@ -1,6 +1,6 @@
 {
   "name": "DefaultTemplate",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "* nodejs\r * npm\r * bower\r * gulp",
   "main": "gulpfile.js",
   "dependencies": {
