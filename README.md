@@ -4,21 +4,18 @@
 
 This an easy to handle HTML and CSS template builder application to create compiled HTML-, CSS-, Javascriptfiles.
 
-### Setup
-#### Requirements
-
-* nodejs v^5+
-* npm v^3.8+
+##### Requirements
+* nodejs ^5+
+* npm ^3.8+
 * bower
 * gulp
 
-#### Install
+##### Installation
 * Download NodeJs from [http://nodejs.org/download/] and install it.
 * Install dependencies, run > `npm install gulp -g`
 * Install bower global, run > `npm install bower -g`
 
-
-#### Build instructions.
+#### #Build instructions.
 Getting startet in Commandline/Terminal
 
 ##### 1. Clone git repository.
