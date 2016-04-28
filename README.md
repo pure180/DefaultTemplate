@@ -15,7 +15,7 @@ This an easy to handle HTML and CSS template builder application to create compi
 * Install dependencies, run > `npm install gulp -g`
 * Install bower global, run > `npm install bower -g`
 
-#### #Build instructions.
+##### Build instructions.
 Getting startet in Commandline/Terminal
 
 ##### 1. Clone git repository.
