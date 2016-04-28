@@ -1,6 +1,9 @@
-# Bootstrap, Jade and LESS Template-App
+# Gulp, Jade and LESS template-application with Twitter-Bootstrap
 [![Build Status](https://travis-ci.org/pure180/DefaultTemplate.svg?branch=master)](https://travis-ci.org/pure180/DefaultTemplate)
 [![Dependency Status](https://david-dm.org/pure180/DefaultTemplate.svg)](https://david-dm.org/pure180/DefaultTemplate)
+
+This an easy to handle HTML and CSS template builder application to create compiled HTML-, CSS-, Javascriptfiles.
+
 ### Setup
 #### Requirements
 
