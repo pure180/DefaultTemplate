@@ -44,7 +44,9 @@ var copy = function (src, dist) {
  * -------------------------------------------------------------------------- */
 
 gulp.task('jade', require('./gulp_task/jade')(gulp, plugins, path));
-gulp.task('less', require('./gulp_task/less')(gulp, plugins, path));
+gulp.task('less:build', require('./gulp_task/less')(gulp, plugins, path, false));
+gulp.task('less:build:min', require('./gulp_task/less')(gulp, plugins, path, true));
+gulp.task('less', ['less:build', 'less:build:min']);
 gulp.task('scripts', require('./gulp_task/scripts')(gulp, plugins, path));
 gulp.task('images', require('./gulp_task/images')(gulp, plugins, path));
 gulp.task('fonts', require('./gulp_task/fonts')(gulp, plugins, path));

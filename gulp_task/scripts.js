@@ -7,9 +7,6 @@ var notify = require('gulp-notify');
 var rename = require('gulp-rename');
 var gutil = require('gulp-util');
 
-var LessPluginCleanCSS = require('less-plugin-clean-css'),
-    cleancss = new LessPluginCleanCSS({advanced: true});
-
 module.exports = function (gulp, plugins, path) {
   return function () {
     var scripts_task = function(src, dist, note){
