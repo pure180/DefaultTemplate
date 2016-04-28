@@ -1,6 +1,7 @@
 'use-strict';
 var gulp = require('gulp');
 var imagemin = require('gulp-imagemin');
+var changed = require('gulp-changed');
 var notify = require('gulp-notify');
 
 
@@ -9,6 +10,7 @@ module.exports = function (gulp, plugins, path) {
   return function () {
     var images_task = function(src, dist, note){
       return gulp.src( [src + '**/*.jpg', src + '**/*.png', src + '**/*.gif', src + '**/*.svg' ] )
+        .pipe(changed( dist ))
         .pipe(imagemin({ optimizationLevel: 3, progressive: true, interlaced: true }))
         .pipe(gulp.dest( dist ))
         .pipe(notify({
