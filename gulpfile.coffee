@@ -11,6 +11,7 @@ gutil             = require('gulp-util')
 connect           = require('gulp-connect')
 through           = require('through2')
 fs                = require('fs')
+_                 = require('lodash')
 
 ## COFFEE & BOWER
 coffee            = require('gulp-coffee')
@@ -77,7 +78,10 @@ settings =
       coffee:   path.join root.src, 'coffee','**','*.coffee'
       js:       path.join root.src, 'js','**','*.js'
       pug:      path.join root.src, 'pug', '**', '*.pug'
-      pugData:  path.join root.src, 'pug', '_data', '**', '*.json'
+      pugData:
+        file:   path.join root.src, 'pug', '_data', 'file', '**', '*.json'
+        project: path.join root.src, 'pug', '_data', '*.json'
+
       less:     path.join root.src, 'less'
       img: [
                 path.join root.src, 'img','**','*.jpg'
@@ -115,6 +119,7 @@ settings =
       coffee:   path.join root.src, 'coffee','**','*.coffee'
       js:       path.join root.src, 'js','**','*.js'
       less:     path.join root.src, 'less','**','*.less'
+      pugData:  path.join root.src, 'pug', '_data', '**', '*.json'
 
 
   autoprefixer:
@@ -148,12 +153,6 @@ copy = (src, dist) ->
   .pipe(notify(message: notifier.served))
   .pipe connect.reload()
 
-extend = (obj, src) ->
-  Object.keys(src).forEach (key) ->
-    obj[key] = src[key]
-    return
-  obj
-
 getDateTime = ->
   date = new Date();
   return date
@@ -165,7 +164,7 @@ timestamp = getDateTime()
 ===========================================================================
 ###
 
-gulp.task 'app:clean', ->
+gulp.task 'clean', ->
   del [
     root.dest + '/**/*.html'
     settings.path.dest.js + '/**/*.js'
@@ -230,23 +229,36 @@ gulp.task 'app:javascript', ->
 ===========================================================================
 ###
 
+getJson = (paths) ->
+  json = {}
+  files = glob.sync paths
+  for key of files
+    `key = key`
+    if fs.existsSync(files[key])
+      parsedJson = {}
+      if files[key]
+        try
+          parsedJson = JSON.parse(fs.readFileSync(files[key]))
+        catch e
+          console.log(e)
+          console.log(files[key])
+      json = _.assignIn json, _.merge json, parsedJson
+  return json
+
+getPugData = (data) ->
+  pugData = {}
+  if typeof data == 'object'
+    for key of data
+      pugData[key] = getJson path.join('.', data[key])
+  else
+    pugData = getJson path.join('.', data)
+  return pugData
+
+
 jadeTask = (src, dist, note, inheritance) ->
   inherit = if inheritance then true else false
-  getPugData = (file) ->
-    pugData = {}
-    files = glob.sync path.join(file.cwd + '/' + settings.path.src.pugData)
-    for key of files
-      `key = key`
-      if fs.existsSync(files[key])
-        parsedJson = {}
-        if files[key]
-          try
-            parsedJson = JSON.parse(fs.readFileSync(files[key]))
-          catch e
-            console.log(e)
-            console.log(files[key])
-        pugData = extend(pugData, parsedJson)
-    return pugData
+  pugData = getPugData(settings.path.src.pugData)
+
   gulp.src(src)
   .pipe(plumber((error) ->
     gutil.log error.message
@@ -264,7 +276,7 @@ jadeTask = (src, dist, note, inheritance) ->
     !/\/_/.test(file.path) and !/^_/.test(file.relative)
   ))
   .pipe(data((file) ->
-    return getPugData(file)
+    return pugData
   ))
   .pipe(pug(pretty: true))
   .pipe(gulp.dest(dist))
@@ -379,7 +391,7 @@ gulp.slurped = false
 gulp.task 'app:watch', ['setWatch', 'jade'], ->
   gulp.watch settings.path.watch.coffee, [ 'app:coffee' ]
   gulp.watch settings.path.watch.js, [ 'app:javascript' ]
-  gulp.watch settings.path.src.pugData, [ 'jade:json' ]
+  gulp.watch settings.path.watch.pugData, [ 'jade:json' ]
   gulp.watch settings.path.src.fonts, [ 'app:fonts' ]
   gulp.watch settings.path.src.pug, [ 'jade' ]
   gulp.watch settings.path.watch.less, [ 'app:less' ]
@@ -388,7 +400,6 @@ gulp.task 'app:watch', ['setWatch', 'jade'], ->
   gulp.watch path.join(settings.path.src.less,'variables','**', '*.less'), [ 'bower:less:temp', 'app:less' ]
   gulp.watch path.join('temp', '**' ,'*.css'), [ 'bower:css:temp' ]
   gulp.watch 'bower_components/**/*.js', [ 'bower:javascript' ]
-  gulp.watch './gulpfile.coffee', [ 'app:gulp' ]
 
   if settings.ftp.uploadFiles
     gulp.watch root.dest + '/**/*.html', ['ftp:html']
@@ -424,11 +435,6 @@ gulp.task 'build:watch', [
   'app:video'
   'app:copy:fav'
   'app:fonts'
-]
-
-gulp.task 'reload', [
-  'build'
-  'bower:task'
 ]
 
 gulp.task 'app:init', ['app:watch', 'app:server']
