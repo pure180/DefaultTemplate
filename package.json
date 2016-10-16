@@ -10,8 +10,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "init": "npm install && bower install && coffee -c -b gulpfile.coffee",
     "build_gulp": "coffee -c -b gulpfile.coffee",
+    "init": "npm install && bower install && npm run build_gulp",
     "build": "npm run build_gulp && gulp clean && gulp bower && gulp build",
     "serve": "npm run build_gulp && gulp clean && gulp bower && gulp build:watch && gulp app:init",
     "test": "npm run build"
