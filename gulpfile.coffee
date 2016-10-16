@@ -66,10 +66,10 @@ settings =
     port: 8888
 
   ftp:
-    host: 'ventzke-media.de'
-    user: 'ncdaniel'
-    pass: 'zG2da%67'
-    remotePath: '/httpdocs/vm/projekte/vbvh/tmpl1'
+    host: '127.0.0.1'
+    user: 'username'
+    pass: '****'
+    remotePath: '/'
     uploadFiles: false
 
   path:
@@ -234,7 +234,7 @@ jadeTask = (src, dist, note, inheritance) ->
   inherit = if inheritance then true else false
   getPugData = (file) ->
     pugData = {}
-    files = glob.sync(file.cwd + '/' + settings.path.src.pugData)
+    files = glob.sync path.join(file.cwd + '/' + settings.path.src.pugData)
     for key of files
       `key = key`
       if fs.existsSync(files[key])
@@ -403,8 +403,7 @@ gulp.task 'app:watch', ['setWatch', 'jade'], ->
 
 
 ### BUILD TASKS ===============================================================
-===========================================================================
-###
+=========================================================================== ###
 
 gulp.task 'build', [
   'app:coffee'
@@ -435,8 +434,7 @@ gulp.task 'reload', [
 gulp.task 'app:init', ['app:watch', 'app:server']
 
 ### BOWER TASKS ===============================================================
-===========================================================================
-###
+=========================================================================== ###
 
 gulp.task 'bower:get', (cb) ->
   bower.commands.install([], { save: true }, {}).on 'end', (installed) ->
@@ -480,14 +478,8 @@ gulp.task 'bower:less:temp', ['bower:css'], (cb) ->
 
       .pipe(replace('@import "variables.less";', '@import "variables.less";\n@import "../../../' + settings.path.src.less + '/variables/' + file.relative + '";\n'))
       .pipe(less())
-      #.pipe(autoprefixer(settings.autoprefixer))
-      #.pipe(concat('libs.css'))
       .pipe(gulp.dest('./temp'))
-      #.pipe(rename(suffix: '.min'))
-      #.pipe(cleanCSS(compatibility: 'ie8'))
-      #.pipe(gulp.dest(settings.path.dest.css))
       .pipe(notify(message: notifier.served))
-      #.pipe connect.reload()
 
       cb null, file
       return
