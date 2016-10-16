@@ -48,18 +48,18 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-pug": "^3.0.2",
-    "gulp-pug-inheritance": "^0.1.1",
+    "gulp-pug-inheritance": "^0.2.1",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-uglify": "^1.5.3",
+    "gulp-sourcemaps": "^2.1.1",
+    "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7",
     "jshint": "^2.9.2",
     "main-bower-files": "^2.13.1",
     "path": "^0.12.7",
     "run-sequence": "^1.2.1",
     "through2": "^2.0.1",
-    "yargs": "^4.7.1"
+    "yargs": "^6.1.1"
   },
   "repository": {
     "type": "git",
