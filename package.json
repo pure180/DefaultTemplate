@@ -12,8 +12,8 @@
   "scripts": {
     "init": "npm install && bower install && coffee -c -b gulpfile.coffee",
     "build_gulp": "coffee -c -b gulpfile.coffee",
-    "build": "npm run build_gulp && gulp bower && gulp app:clean && gulp build",
-    "serve": "npm run build && gulp app:init",
+    "build": "npm run build_gulp && gulp clean && gulp bower && gulp build",
+    "serve": "npm run build_gulp && gulp clean && gulp bower && gulp build:watch && gulp app:init",
     "test": "npm run build"
   },
   "keywords": [
