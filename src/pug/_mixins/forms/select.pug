@@ -1,0 +1,22 @@
+mixin select(object)
+  if object.required
+    - var required = {'required' : 'required'}
+  else 
+    - var required = {}
+    
+  if object.showlabel
+    - var sronly = 'sr-only'
+  else
+    - var sronly = ''
+  label(class=sronly for=object.id)= object.placeholder  
+  
+  if object.required
+    span.hidden(for=object.id)= object.error
+
+  select.form-control(id=object.id name=object.name data-type="select" tabindex="1")&attributes(required, object.attr)
+    each option in object.option
+      if option.selected
+        - var selected = {'selected':''}
+      else 
+        - var selected = {}
+      option(value=option.value)&attributes(selected)= option.text

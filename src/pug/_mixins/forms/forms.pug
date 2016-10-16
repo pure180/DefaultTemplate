@@ -1,0 +1,51 @@
+include input.pug
+include select.pug
+include radio.pug
+include checkbox.pug
+include textarea.pug
+
+mixin formcontent(object, text)
+
+  each field in object
+    case field.type
+      when 'select'
+        .form-group
+          +select(field)
+      when 'radio'
+        .form-group
+          +radio(field)
+      when 'checkbox'
+        //-.form-group
+        +checkbox(field)
+      when 'textarea'
+        .form-group.form-group-textarea
+          +textarea(field)
+      when 'group'
+        .row
+          each group in field.items
+              div(class=field.classes)
+                .form-group
+                  +input(group)
+      default
+        .form-group
+          +input(field)
+
+mixin form(setTag, attr, object, text, row)
+
+  //-if datas
+    - var attr = ''
+    each val, key in datas
+      - var attr = key + '="' + val + '" ' + attr
+      
+  if setTag
+    form&attributes(attr)
+      +formcontent(object, text)
+      .row.margin-md-top.text-right
+        .col-sm-12
+          button.btn.btn-gray(type="submit") Senden
+  else 
+    fieldset.form-fieldset&attributes(attr)
+      .row.margin-md-bottom
+        +formcontent(object, text, row)
+        
+  

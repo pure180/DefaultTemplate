@@ -1,0 +1,28 @@
+doctype html
+html(lang='de')
+
+  include ../_mixins/mixins.pug
+
+  block variables
+
+  - var mainAttr = teamAttr
+
+  head
+    block head
+      block meta
+        include ../_partials/meta/meta.pug
+      block style
+        include ../_partials/assets/css.pug
+
+  body
+    block body
+      header
+        block header
+
+      main
+        block main
+
+      block footer
+
+    block scripts
+      include ../_partials/assets/js.pug

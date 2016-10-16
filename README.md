@@ -4,26 +4,32 @@
 
 This an easy to handle HTML and CSS template builder application to create compiled HTML-, CSS-, Javascriptfiles.
 
-##### Requirements
-* nodejs ^5+
+##### Requierments:
+To run this template-application you need to install following tools to your working machine.
+
+* [nodejs ^5+](https://nodejs.org/en/download/)
 * npm ^3.8+
-* bower
+* bower  
 * gulp
 
-##### Installation
-* Download NodeJs from [http://nodejs.org/download/] and install it.
-* Install dependencies, run > `npm install gulp -g`
-* Install bower global, run > `npm install bower -g`
+#### Installation instructions
 
-##### Build instructions.
-Getting startet in Commandline/Terminal
+* Download NodeJs from [https://nodejs.org/en/download/](https://nodejs.org/en/download/) and install it.
+* Install npm globally, if not yet done, `npm install -g npm`, test npm version with `npm -v`
+* Install bower globally, `npm install -g bower` (beware, you need to have [git](https://git-scm.com/downloads) installed to use bower)
+* Install gulp globally, `npm install -g gulp`
 
-##### 1. Clone git repository.
-```
-git clone git@github.com:pure180/DefaultTemplate.git
-```
-##### 2. Install applikation dependencies
-Navigate to the applikation folder on your computer (cd DefaultTemplate), then run:
+#### Init Template application and install dependencies
+You can use the command, provided by the package.json:
 
-1. `npm run init` > This will install all needed packages npm and bower dependencies
-2. `npm run start` > to start developing
+`npm run init`
+
+or, install dependent packages manually with:
+
+`npm install` and `bower install`
+
+#### Start build
+run:
+`npm run serve`
+
+Open you browser and navigate to `http://127.0.0.1:8888` or `http://localhost:8888`

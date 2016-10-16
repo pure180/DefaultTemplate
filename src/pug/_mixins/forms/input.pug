@@ -1,0 +1,26 @@
+mixin input(object)
+  if object.required
+    - var required = {'required' : 'required'}
+  else 
+    - var required = {}
+  
+  if object.pseudo
+    - var pseudo = {"data-input-type" : object.pseudo}
+  else
+    - var pseudo = {}
+    
+  if object.disabled
+    - var disabled = {"disabled" : "disabled"}
+  else
+    - var disabled = {}
+    
+  if !object.showlabel
+    - var sronly = {'class' : 'sr-only'}
+  else
+    - var sronly = {'class' : ''}
+  
+  label.form-label&attributes(disabled, sronly)(for=object.id)= object.placeholder
+  
+  if object.required || object.disabled
+    span.hidden(data-for=object.id)!= object.error
+  input.form-control(id=object.id name=object.name type=object.type placeholder=object.placeholder)&attributes(required, pseudo, disabled, object.attr)

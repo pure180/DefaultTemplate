@@ -1,0 +1,12 @@
+mixin checkbox(object)
+  if object.required
+    - var required = {'required' : 'required'}
+  else 
+    - var required = {}
+    
+  .checkbox
+    label  
+      if object.required
+        span.hidden(for=object.id)= object.error
+      input(id=object.id type=object.type name=object.name data-type="checkbox_small")&attributes(object.attr)&attributes(required)
+      span!= object.placeholder

@@ -1,0 +1,8 @@
+each js in project.assets.js
+  if project.production
+    - var jsFile = js.file + '.min.js'
+  else
+    - var jsFile = js.file + '.js'
+  script(src=jsFile)&attributes(js.attr)
+
+  

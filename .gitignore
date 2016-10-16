@@ -1,13 +1,13 @@
-#Repo Ignores
-dist
 node_modules
-src/img
-src/fonts
-src/bower_components
-src/less/bootstrap
-src/less/fontawesome
-src/less/font-awesome
+bower_components
+gulpfile.js
 npm-debug.log
+dist
+src/img
+src/video
+src/fonts
+temp
+src/temp
 
 # Windows image file caches
 Thumbs.db
@@ -52,3 +52,10 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+AdditionalConfiguration.php
+typo3conf/deprecation_6a38680c90.log
+/typo3conf/deprecation_99f83c0de3.log
+/fileadmin
+/fileadmin.zip
+/fileadmin-2016-08-04
+/templates/video
