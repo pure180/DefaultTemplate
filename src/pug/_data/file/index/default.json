@@ -1,0 +1,32 @@
+{
+
+    "index": {
+        "name": "index",
+        "title": "Default Template",
+        "meta": [{
+            "name": "description",
+            "content": " "
+        }, {
+            "name": "keywords",
+            "content": " "
+        }, {
+            "name": "author",
+            "content": " "
+        }, {
+            "name": "og:title",
+            "content": " "
+        }, {
+            "name": "og:description",
+            "content": " "
+        }, {
+            "name": "og:author",
+            "content": " "
+        }, {
+            "name": "og:image",
+            "content": " "
+        }, {
+            "name": "og:url",
+            "content": " "
+        }]
+    }
+}
