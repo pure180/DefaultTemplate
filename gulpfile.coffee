@@ -76,8 +76,8 @@ settings =
     src:
       coffee:   path.join root.src, 'coffee','**','*.coffee'
       js:       path.join root.src, 'js','**','*.js'
-      pug:      path.join root.src, 'jade', '**', '*.pug'
-      pugData:  path.join root.src, 'jade', 'data', '**', '*.json'
+      pug:      path.join root.src, 'pug', '**', '*.pug'
+      pugData:  path.join root.src, 'pug', '_data', '**', '*.json'
       less:     path.join root.src, 'less'
       img: [
                 path.join root.src, 'img','**','*.jpg'
@@ -232,23 +232,7 @@ gulp.task 'app:javascript', ->
 
 jadeTask = (src, dist, note, inheritance) ->
   inherit = if inheritance then true else false
-  gulp.src(src)
-  .pipe(plumber((error) ->
-    gutil.log error.message
-    @emit 'end'
-    return
-  ))
-  .pipe(gulpif(inherit, changed('dist', extension: '.html')))
-  .pipe(gulpif(inherit, gulpif(global.isWatching, cached('jade'))))
-  .pipe(gulpif(inherit, puginheritance(
-    basedir: 'src/jade'
-    extension: '.pug'
-    skip: 'node_modules'
-  )))
-  .pipe(filter((file) ->
-    !/\/_/.test(file.path) and !/^_/.test(file.relative)
-  ))
-  .pipe(data((file) ->
+  getPugData = (file) ->
     pugData = {}
     files = glob.sync(file.cwd + '/' + settings.path.src.pugData)
     for key of files
@@ -262,7 +246,25 @@ jadeTask = (src, dist, note, inheritance) ->
             console.log(e)
             console.log(files[key])
         pugData = extend(pugData, parsedJson)
-    pugData
+    return pugData
+  gulp.src(src)
+  .pipe(plumber((error) ->
+    gutil.log error.message
+    @emit 'end'
+    return
+  ))
+  .pipe(gulpif(inherit, changed('dist', extension: '.html')))
+  .pipe(gulpif(inherit, gulpif(global.isWatching, cached('jade'))))
+  .pipe(gulpif(inherit, puginheritance(
+    basedir: 'src/pug'
+    extension: '.pug'
+    skip: 'node_modules'
+  )))
+  .pipe(filter((file) ->
+    !/\/_/.test(file.path) and !/^_/.test(file.relative)
+  ))
+  .pipe(data((file) ->
+    return getPugData(file)
   ))
   .pipe(pug(pretty: true))
   .pipe(gulp.dest(dist))

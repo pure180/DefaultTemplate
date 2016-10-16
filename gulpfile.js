@@ -103,8 +103,8 @@ settings = {
     src: {
       coffee: path.join(root.src, 'coffee', '**', '*.coffee'),
       js: path.join(root.src, 'js', '**', '*.js'),
-      pug: path.join(root.src, 'jade', '**', '*.pug'),
-      pugData: path.join(root.src, 'jade', 'data', '**', '*.json'),
+      pug: path.join(root.src, 'pug', '**', '*.pug'),
+      pugData: path.join(root.src, 'pug', '_data', '**', '*.json'),
       less: path.join(root.src, 'less'),
       img: [path.join(root.src, 'img', '**', '*.jpg'), path.join(root.src, 'img', '**', '*.JPG'), path.join(root.src, 'img', '**', '*.png'), path.join(root.src, 'img', '**', '*.PNG'), path.join(root.src, 'img', '**', '*.gif'), path.join(root.src, 'img', '**', '*.GIF'), path.join(root.src, 'img', '**', '*.svg'), path.join(root.src, 'img', '**', '*.SVG')],
       video: [path.join(root.src, 'video', '**', '*.mp4'), path.join(root.src, 'video', '**', '*.webm'), path.join(root.src, 'video', '**', '*.ogv')],
@@ -221,20 +221,9 @@ gulp.task('app:javascript', function() {
  */
 
 jadeTask = function(src, dist, note, inheritance) {
-  var inherit;
+  var getPugData, inherit;
   inherit = inheritance ? true : false;
-  return gulp.src(src).pipe(plumber(function(error) {
-    gutil.log(error.message);
-    this.emit('end');
-  })).pipe(gulpif(inherit, changed('dist', {
-    extension: '.html'
-  }))).pipe(gulpif(inherit, gulpif(global.isWatching, cached('jade')))).pipe(gulpif(inherit, puginheritance({
-    basedir: 'src/jade',
-    extension: '.pug',
-    skip: 'node_modules'
-  }))).pipe(filter(function(file) {
-    return !/\/_/.test(file.path) && !/^_/.test(file.relative);
-  })).pipe(data(function(file) {
+  getPugData = function(file) {
     var e, files, key, parsedJson, pugData;
     pugData = {};
     files = glob.sync(file.cwd + '/' + settings.path.src.pugData);
@@ -255,6 +244,20 @@ jadeTask = function(src, dist, note, inheritance) {
       }
     }
     return pugData;
+  };
+  return gulp.src(src).pipe(plumber(function(error) {
+    gutil.log(error.message);
+    this.emit('end');
+  })).pipe(gulpif(inherit, changed('dist', {
+    extension: '.html'
+  }))).pipe(gulpif(inherit, gulpif(global.isWatching, cached('jade')))).pipe(gulpif(inherit, puginheritance({
+    basedir: 'src/pug',
+    extension: '.pug',
+    skip: 'node_modules'
+  }))).pipe(filter(function(file) {
+    return !/\/_/.test(file.path) && !/^_/.test(file.relative);
+  })).pipe(data(function(file) {
+    return getPugData(file);
   })).pipe(pug({
     pretty: true
   })).pipe(gulp.dest(dist)).pipe(notify({
