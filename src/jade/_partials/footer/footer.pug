@@ -1,0 +1,25 @@
+.section.section-footer
+  .container-fluid
+    .row
+      .col-sm-7.col-sm-offset-5.visible-xs.visible-sm
+        h3.h2= footer.title
+        p= footer.text
+
+        
+      .col-sm-7.col-sm-push-5.footer-right
+        .block-center
+          .block-center-inner
+            +form(true, footer.form.attr, footer.form.fields, defaults)
+      
+      .col-sm-5.col-sm-pull-7.footer-left
+        .block-center
+          .block-center-inner        
+            each contact in footer.contact
+              .contact-info
+                div.h1
+                  span.color-gray-light= contact.title
+                  br
+                  a.link.link-footer(href=contact.link.href title=contact.link.title)=contact.link.text
+            .contact-copyright.color-gray-light
+              p.larger!= footer.copy
+            

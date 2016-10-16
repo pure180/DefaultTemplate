@@ -1,0 +1,13 @@
+//-if project.production
+  base(href=project.base)
+title= page.title
+each defaultMeta in project.meta
+  meta&attributes(defaultMeta)  
+each meta in page.meta
+  meta&attributes(meta)
+  
+if project.favicon.active
+  each favLink in project.favicon.link
+    link&attributes(favLink)
+  each favMeta in project.favicon.meta
+    meta&attributes(favMeta)

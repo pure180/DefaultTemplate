@@ -1,0 +1,20 @@
+mixin radio(object)
+  if object.required
+    - var required = {'required' : 'required'}
+  else 
+    - var required = {}
+  if object.classes
+    -var classes = object.classes
+  else
+    -var classes = 'col-sm-4'
+  .row.radio-outer(id=object.id)
+    if object.showlabel
+      .col-sm-12=object.placeholder
+    each option in object.option
+      div(class=classes)
+        .radio
+          label
+            if object.required
+              span.hidden(for=object.id)= object.error
+            input(type=object.type name=object.name value=option.value data-type="radio")&attributes(object.attr)
+            span= option.text

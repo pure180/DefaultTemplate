@@ -1,0 +1,26 @@
+mixin textarea(object)
+  if object.required
+    - var required = {'required' : 'required'}
+  else 
+    - var required = {}
+  
+  if object.pseudo
+    - var pseudo = {"data-input-type" : object.pseudo}
+  else
+    - var pseudo = {}
+    
+  if object.disabled
+    - var disabled = {"disabled" : "disabled"}
+  else
+    - var disabled = {}
+    
+  if !object.showlabel
+    - var sronly = {'class' : 'sr-only'}
+  else
+    - var sronly = {'class' : ''}
+  
+  label.form-label.form-label-textarea&attributes(disabled, sronly)(for=object.id)= object.placeholder
+  
+  if object.required || object.disabled
+    span.hidden(data-for=object.id)!= object.error
+  textarea.form-control.form-control-textarea(id=object.id name=object.name data-type=object.type)&attributes(required, pseudo, disabled, object.attr)

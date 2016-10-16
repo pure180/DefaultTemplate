@@ -1,0 +1,74 @@
+// Create general margins, paddings and border
+.generate-directions(@name, @property, @value) {
+  .@{name}-top {
+    @{property}-top: @value;
+  }
+  .@{name}-bottom {
+    @{property}-bottom: @value;
+  }
+  .@{name}-left {
+    @{property}-left: @value;
+  }
+  .@{name}-right {
+    @{property}-right: @value;
+  }
+  .@{name} {
+    @{property}: @value;
+  }
+}
+
+// no-(padding|border|margin)
+.generate-directions(padding-none, padding, 0);
+.generate-directions(border-none, border, 0);
+.generate-directions(margin-none, margin, 0);
+
+@padding-sm:            @padding-base-vertical;
+@margin-sm:             @grid-gutter-width/2;
+@border-sm:             1px;
+
+@media screen and (min-width: @screen-md-min) {
+  // small-(padding|border|margin)
+  .generate-directions(padding-sm, padding, @padding-sm);
+  .generate-directions(border-sm, border, @border-sm);
+  .generate-directions(margin-sm, margin, @margin-sm);
+
+  // middle-(padding|border|margin)
+  .generate-directions(padding-md, padding, @padding-sm*2);
+  .generate-directions(border-md, border, @border-sm*2);
+  .generate-directions(margin-md, margin, @margin-sm*2);
+
+  // large-(padding|border|margin)
+
+  .generate-directions(padding-lg, padding, @padding-sm*4);
+  .generate-directions(border-lg, border, @border-sm*3);
+  .generate-directions(margin-lg, margin, @margin-sm*4);
+
+  .generate-directions(padding-xl, padding, @grid-gutter-width*2.33);
+  .generate-directions(margin-xl, margin, @grid-gutter-width*2.33);
+}
+
+@media screen and (max-width: @screen-sm-max) {
+  .generate-directions(padding-sm, padding, @padding-sm/2);
+  .generate-directions(border-sm, border, @border-sm/2);
+  .generate-directions(margin-sm, margin, @margin-sm/2);
+
+  // middle-(padding|border|margin)
+  .generate-directions(padding-md, padding, @padding-sm);
+  .generate-directions(border-md, border, @border-sm);
+  .generate-directions(margin-md, margin, @margin-sm);
+
+  // large-(padding|border|margin)
+
+  .generate-directions(padding-lg, padding, @padding-sm*2);
+  .generate-directions(border-lg, border, @border-sm*1.5);
+  .generate-directions(margin-lg, margin, @margin-sm*2);
+
+  .generate-directions(padding-xl, padding, @grid-gutter-width*1.33);
+  .generate-directions(margin-xl, margin, @grid-gutter-width*1.33);
+}
+
+@media (max-width: @screen-xs-max){
+  .generate-directions(margin-lg, margin, @grid-gutter-width);
+  .generate-directions(padding-xl, padding, @grid-gutter-width*1.33);
+  .generate-directions(margin-xl, margin, @grid-gutter-width*1.33);
+}
