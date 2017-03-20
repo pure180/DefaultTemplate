@@ -12,6 +12,7 @@ connect           = require('gulp-connect')
 through           = require('through2')
 fs                = require('fs')
 _                 = require('lodash')
+addsrc            = require('gulp-add-src')
 
 ## COFFEE & BOWER
 coffee            = require('gulp-coffee')
@@ -40,6 +41,7 @@ less              = require('gulp-less')
 autoprefixer      = require('gulp-autoprefixer')
 sourcemaps        = require('gulp-sourcemaps')
 cleanCSS          = require('gulp-clean-css')
+bowerLess         = require('./lib/bower.less.js')
 
 ## IMAGES
 imagemin          = require('gulp-imagemin')
@@ -389,6 +391,7 @@ gulp.slurped = false
 
 
 gulp.task 'app:watch', ['setWatch', 'jade'], ->
+
   gulp.watch settings.path.watch.coffee, [ 'app:coffee' ]
   gulp.watch settings.path.watch.js, [ 'app:javascript' ]
   gulp.watch settings.path.watch.pugData, [ 'jade:json' ]
@@ -397,8 +400,11 @@ gulp.task 'app:watch', ['setWatch', 'jade'], ->
   gulp.watch settings.path.watch.less, [ 'app:less' ]
   gulp.watch settings.path.src.img, [ 'app:images' ]
   gulp.watch settings.path.src.video, [ 'app:video' ]
-  gulp.watch path.join(settings.path.src.less,'variables','**', '*.less'), [ 'bower:less:temp', 'app:less' ]
-  gulp.watch path.join('temp', '**' ,'*.css'), [ 'bower:css:temp' ]
+
+
+  gulp.watch path.join(settings.path.src.less,'variables','**', '*.less'), [ 'bower:less', 'app:less' ]
+
+  gulp.watch ['bower_components/**/*.less', 'bower_components/**/*.css'], [ 'bower:less' ]
   gulp.watch 'bower_components/**/*.js', [ 'bower:javascript' ]
 
   if settings.ftp.uploadFiles
@@ -451,66 +457,36 @@ gulp.task 'bower:get', (cb) ->
 gulp.task 'bower:javascript', ->
   javaScriptTask mainBowerFiles('**/*.js'), settings.path.dest.js, 'libs', notifier.served
 
-gulp.task 'bower:css', ->
-  gulp.src(mainBowerFiles('**/*.css'))
-  .pipe(gulp.dest('./temp'))
-  .pipe(notify(message: notifier.served))
-
-gulp.task 'bower:less:temp', ['bower:css'], (cb) ->
-  name = ''
-  bowerLess = gulp.src(mainBowerFiles('**/*.less'))
+bowerLessTask = (src, dist, minify, note) ->
+  min = if minify then true else false
+  return gulp.src(src)
     .pipe(plumber((error) ->
       gutil.log error.message
       @emit 'end'
       return
-    )).pipe through.obj((file, enc, cb) ->
-      pathToVariables = path.join(file.base, 'variables.less')
-      if fs.existsSync pathToVariables
-        variables = fs.readFileSync(path.join(file.base, 'variables.less'))
-        dir = path.join(file.cwd, 'src', 'less', 'variables')
+    ))
+    .pipe bowerLess basedir: 'src/less'
+    .pipe(sourcemaps.init())
+    .pipe(less())
+    .pipe addsrc.append(mainBowerFiles('**/*.css'))
+    .pipe(autoprefixer(settings.autoprefixer))
+    .pipe(concat('libs.css'))
+    .pipe(gulpif(min, rename(suffix: '.min')))
+    .pipe(gulpif(min, cleanCSS(compatibility: 'ie8')))
+    #.pipe(changed(dist, extension: '.css'))
+    .pipe(sourcemaps.write('./'))
+    .pipe(gulp.dest(dist))
+    .pipe(notify(message: note))
+    .pipe connect.reload()
 
-        if !fs.existsSync(dir)
-          fs.mkdirSync dir
+gulp.task 'bower:less:normal', ->
+  bowerLessTask mainBowerFiles('**/*.less'), settings.path.dest.css, false, notifier.served
 
-        if !fs.existsSync(path.join(dir, file.relative))
-          fs.writeFileSync path.join(dir, file.relative), variables
+gulp.task 'bower:less:minified', ->
+  bowerLessTask mainBowerFiles('**/*.less'), settings.path.dest.css, true, notifier.served
 
-      gulp.src(file.path)
-      .pipe(plumber((error) ->
-        gutil.log error.message
-        @emit 'end'
-        return
-      ))
+gulp.task 'bower:less', ['bower:less:normal', 'bower:less:minified']
 
-      .pipe(replace('@import "variables.less";', '@import "variables.less";\n@import "../../../' + settings.path.src.less + '/variables/' + file.relative + '";\n'))
-      .pipe(less())
-      .pipe(gulp.dest('./temp'))
-      .pipe(notify(message: notifier.served))
-
-      cb null, file
-      return
-    )
-  return bowerLess
-
-gulp.task 'bower:css:temp', ->
-  gulp.src('./temp/*.css')
-  .pipe(plumber((error) ->
-    gutil.log error.message
-    @emit 'end'
-    return
-  ))
-  .pipe(autoprefixer(settings.autoprefixer))
-  .pipe(concat('libs.css'))
-  .pipe(gulp.dest(settings.path.dest.css))
-  .pipe(notify(message: notifier.served))
-  .pipe(rename(suffix: '.min'))
-  .pipe(cleanCSS(compatibility: 'ie8'))
-  .pipe(gulp.dest(settings.path.dest.css))
-  .pipe(notify(message: notifier.served))
-  .pipe connect.reload()
-
-gulp.task 'bower:less', ['bower:less:temp'], () ->
-  gulp.start 'bower:css:temp'
 
 gulp.task 'bower:fonts', ->
   gulp.src('./bower_components')
