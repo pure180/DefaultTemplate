@@ -1,6 +1,6 @@
 {
   "name": "defaulttemplate",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Gulp, Jade and LESS Template-Applikation with Twbs-Bootstrap",
   "project": {
     "name": "Default Template",
